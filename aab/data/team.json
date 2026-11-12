@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Tamreena Tashfeen",
+    "short": "Tamreena",
+    "role": "Project Lead & Director",
+    "description": "Tamreena led the overall vision, planning, and development of Atlas After Blue. She formed and coordinated the team, selected the NASA Space Apps Challenge problem, assigned responsibilities, and guided the project's direction. She designed and developed the website, building and organizing all its pages and integrating the team's research, geospatial outputs, scientific analysis, and documentation into a unified platform. She also directed the website's structure, user experience, visual identity, branding, content placement, and presentation, making key product decisions throughout the project.",
+    "linkedin": "https://www.linkedin.com/in/tamreena-tashfeen-5b3336371/",
+    "photo": "img/tamreena-tashfeen.png",
+    "lead": true,
+    "focus": "50% 30%"
+  },
+  {
+    "name": "Syed Saim Ali",
+    "short": "Saim",
+    "role": "SAR Pipeline & Geospatial Processing Engineer",
+    "description": "Syed Saim Ali designed and developed the NISAR GCOV processing pipeline, enabling the processing of large satellite datasets through NASA's ASF Search API without requiring full local downloads. His work includes satellite-scene selection, pre-event and post-event compatibility checks, secure authentication, memory-efficient HDF5 processing, area-of-interest extraction, raster alignment, and backscatter change calculations. He also implemented rule-based candidate flood and anomaly classification to generate the geospatial outputs used by the platform.",
+    "linkedin": "https://www.linkedin.com/in/syed-saim-ali-783034385/",
+    "photo": "img/syed-saim-ali.jpeg",
+    "focus": "50% 30%"
+  },
+  {
+    "name": "Sharmeen Shahid",
+    "short": "Sharmeen",
+    "role": "SAR Image Analysis & Scientific Reporting Specialist",
+    "description": "Sharmeen Shahid analysed the satellite-derived outputs generated through the NISAR processing pipeline and translated the findings into structured scientific reports. Her work includes interpreting radar observations, examining pre-event and post-event changes, evaluating candidate flood estimates, and documenting confidence levels, methodological limitations, and supporting evidence. She prepared the Upper Kohistan flood case-study report to communicate the analysis and its findings in an accessible scientific format.",
+    "linkedin": "https://www.linkedin.com/in/sharmeen-shahid-475a1b427/",
+    "photo": "img/sharmeen-shahid.jpeg",
+    "focus": "50% 38%",
+    "zoom": "1.42"
+  },
+  {
+    "name": "Mamuna Ahmad",
+    "short": "Mamuna",
+    "role": "Research, Product Alignment & Validation Lead",
+    "description": "Mamuna Ahmad contributed to the project's research foundation, product definition, and scientific alignment. She researched previous NASA Space Apps Challenge projects, identified relevant case studies, investigated the project's target audience, and contributed to the naming and identity of Atlas After Blue. She also cross-checked the processing pipeline against the documented methodology and frontend requirements, validated case-study reports against exported results, and supported the refinement of flood-detection conditions through research, testing, and technical collaboration.",
+    "linkedin": "https://www.linkedin.com/in/mamuna-ahmad-796475270/",
+    "photo": "img/mamuna-ahmad.jpeg",
+    "focus": "50% 26%"
+  },
+  {
+    "name": "Ayan Touqeer",
+    "short": "Ayan",
+    "role": "Technical Support & Team Collaboration Coordinator",
+    "description": "Ayan Touqeer supported the team's technical coordination by establishing and managing the shared ClickUp workspace, providing team members with access, and preparing a demonstration video to explain its use. The workspace enabled members to share project materials, monitor task progress, and coordinate deliverables. He also provided technical assistance during discussions concerning project data and image-format requirements, supporting collaboration between team members.",
+    "linkedin": "https://www.linkedin.com/in/m-ayan-touqeer/",
+    "photo": "img/ayan-touqeer.jpeg",
+    "focus": "62% 38%"
+  }
+]

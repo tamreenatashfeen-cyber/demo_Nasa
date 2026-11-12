@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sources | Atlas After Blue</title>
+  <meta name="description" content="Review the satellite data, event reference, NISAR scenes, files and acknowledgements used by Atlas After Blue.">
+  <meta name="theme-color" content="#0B1F3A">
+  <link rel="icon" href="img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/method.css">
+  <link rel="stylesheet" href="css/sources.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Atlas After Blue home">
+        <img src="img/logo.png" alt="">
+        <span>Atlas <b>After Blue</b></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-lines" aria-hidden="true"></span><span class="sr-only">Toggle navigation</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="method.html">Method</a>
+        <a href="sources.html" aria-current="page">Sources</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="m-hero">
+    <div class="mwrap rwrap">
+      <div class="eyebrow"><span class="eyebrow-mark"></span> SOURCES</div>
+      <h1>Data and references</h1>
+      <p class="lead">Everything on this site comes from the public data and files listed here.</p>
+      <ul class="hero-chips" id="hero-chips" aria-label="At a glance" hidden></ul>
+    </div>
+  </section>
+
+  <nav class="subnav" aria-label="On this page">
+    <div class="mwrap">
+      <a href="#satellite-data">Satellite data</a>
+      <a href="#event-report">Event report</a>
+      <a href="#scenes-used">Scenes used</a>
+      <a href="#files-code">Files and code</a>
+      <a href="#data-flow">Where numbers come from</a>
+      <a href="#acknowledgement">Acknowledgement</a>
+    </div>
+  </nav>
+
+  <main id="content">
+
+    <section class="msec" id="satellite-data" aria-labelledby="sat-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <div><p class="section-index">01 / SATELLITE DATA</p><h2 id="sat-title">Satellite data</h2></div>
+          <p class="sub">The radar data behind every figure on this site. Each card opens the original source.</p>
+        </div>
+        <div class="src-grid" id="satellite-sources">
+          <p class="note">Loading source details…</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="msec alt" id="event-report" aria-labelledby="event-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <div><p class="section-index">02 / EVENT REPORT</p><h2 id="event-title">Event report</h2></div>
+          <p class="sub">The written report that confirms the flash flood happened.</p>
+        </div>
+        <div class="src-grid" id="event-sources">
+          <p class="note">Loading event reference…</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="msec" id="scenes-used" aria-labelledby="scenes-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <div><p class="section-index">03 / SCENES USED</p><h2 id="scenes-title">Scenes used</h2></div>
+          <p class="sub">The two NISAR scenes, placed on a timeline around the flood. Select a dot to jump to its scene.</p>
+        </div>
+        <div id="scene-details">
+          <p class="note">Loading scene details…</p>
+        </div>
+        <div class="scene-foot reveal">
+          <p class="scene-note">Both products are provisional (CRID P05023). Search the IDs in ASF Vertex to find the scenes.</p>
+          <a class="link-btn" href="https://search.asf.alaska.edu/" target="_blank" rel="noopener">Open ASF Vertex ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="msec alt" id="files-code" aria-labelledby="files-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <div><p class="section-index">04 / FILES AND CODE</p><h2 id="files-title">Files and code</h2></div>
+          <p class="sub">Download the files, or open a quick preview of the data without leaving the page.</p>
+        </div>
+        <div class="file-groups">
+          <article class="file-group reveal">
+            <h3>Full report</h3>
+            <ul class="file-list">
+              <li>
+                <div class="file-row">
+                  <a class="fname" href="downloads/AAB_Case_Study_Report.pdf" download>AAB_Case_Study_Report.pdf</a>
+                  <span class="ftype pdf">PDF</span>
+                </div>
+                <span class="file-desc">The team's full case study, with background, method, results and limitations.</span>
+                <div class="file-actions"><a class="link-btn solid" href="downloads/AAB_Case_Study_Report.pdf" download>Download PDF</a></div>
+              </li>
+            </ul>
+          </article>
+
+          <article class="file-group reveal" style="--d:80ms">
+            <h3>Results and processing record</h3>
+            <ul class="file-list">
+              <li>
+                <div class="file-row">
+                  <a class="fname" href="data/summary.json" download>data/summary.json</a>
+                  <span class="ftype json">JSON</span>
+                </div>
+                <span class="file-desc">The key figures and the full result record.</span>
+                <div class="file-actions">
+                  <a class="link-btn solid" href="data/summary.json" download>Download</a>
+                  <button class="link-btn" type="button" data-preview="data/summary.json" data-kind="json" aria-expanded="false" aria-controls="pv-summary">Preview</button>
+                </div>
+                <div class="preview" id="pv-summary" hidden><div class="pv-bar"><span class="pv-stats"></span><button class="copy-btn pv-copy" type="button">Copy JSON</button></div><pre tabindex="0"></pre></div>
+              </li>
+              <li>
+                <div class="file-row">
+                  <a class="fname" href="data/quality_report.json" download>data/quality_report.json</a>
+                  <span class="ftype json">JSON</span>
+                </div>
+                <span class="file-desc">Thresholds, cleaning and check results.</span>
+                <div class="file-actions">
+                  <a class="link-btn solid" href="data/quality_report.json" download>Download</a>
+                  <button class="link-btn" type="button" data-preview="data/quality_report.json" data-kind="json" aria-expanded="false" aria-controls="pv-quality">Preview</button>
+                </div>
+                <div class="preview" id="pv-quality" hidden><div class="pv-bar"><span class="pv-stats"></span><button class="copy-btn pv-copy" type="button">Copy JSON</button></div><pre tabindex="0"></pre></div>
+              </li>
+            </ul>
+          </article>
+
+          <article class="file-group reveal">
+            <h3>Map data</h3>
+            <ul class="file-list">
+              <li>
+                <div class="file-row">
+                  <a class="fname" href="data/flood_boundary.geojson" download>data/flood_boundary.geojson</a>
+                  <span class="ftype geojson">GeoJSON</span>
+                </div>
+                <span class="file-desc">55 candidate flood patches and 11 permanent water bodies, ready for GIS software.</span>
+                <div class="file-actions">
+                  <a class="link-btn solid" href="data/flood_boundary.geojson" download>Download</a>
+                  <button class="link-btn" type="button" data-preview="data/flood_boundary.geojson" data-kind="geojson" aria-expanded="false" aria-controls="pv-geo">Count the shapes</button>
+                </div>
+                <div class="preview" id="pv-geo" hidden><div class="pv-bar"><span class="pv-stats"></span><button class="copy-btn pv-copy" type="button">Copy first feature</button></div><pre tabindex="0"></pre></div>
+              </li>
+            </ul>
+          </article>
+
+          <article class="file-group reveal" style="--d:80ms">
+            <h3>Code and all data</h3>
+            <ul class="file-list">
+              <li>
+                <div class="file-row">
+                  <a class="link-btn solid repo-link" id="repo-link" href="#" target="_blank" rel="noopener" aria-disabled="true">AAB on GitHub ↗</a>
+                </div>
+                <span class="file-desc">All code and data files.</span>
+              </li>
+            </ul>
+          </article>
+        </div>
+        <p class="source-error" id="files-source-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="msec" id="data-flow" aria-labelledby="flow-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <div><p class="section-index">05 / HOW IT FITS TOGETHER</p><h2 id="flow-title">Where each number comes from</h2></div>
+          <p class="sub">Choose a data file to see which pages on this site use it.</p>
+        </div>
+        <div class="flow-wrap reveal">
+          <div class="flow-files" id="flow-files" role="group" aria-label="Data files"></div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="flow-pages" id="flow-pages"></div>
+        </div>
+        <p class="flow-note" id="flow-note" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="msec alt" id="acknowledgement" aria-labelledby="ack-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <div><p class="section-index">06 / ACKNOWLEDGEMENT</p><h2 id="ack-title">Acknowledgement</h2></div>
+        </div>
+        <div class="ack reveal" id="acknowledgement-content">
+          <p class="note" style="color:#B7C9DD">Loading acknowledgement…</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main">
+      <a class="footer-brand" href="index.html"><img src="img/logo.png" alt=""><span>Atlas After Blue</span></a>
+      <p id="ack">AAB · NASA Space Apps Challenge 2026.</p>
+      <p class="footer-disclaimer">Candidate results, not confirmed floodwater.</p>
+    </div>
+    <div class="footer-bottom"><span>EARTH OBSERVATION / KANDIA GOL / 2026</span><a href="#content">Back to top ↑</a></div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const $ = id => document.getElementById(id);
+      const el = (tag, cls, text) => {
+        const node = document.createElement(tag);
+        if (cls) node.className = cls;
+        if (text != null) node.textContent = text;
+        return node;
+      };
+      const EVENT_DATE = "2026-07-22";   // the flash flood date used across the site
+
+      const ICON_DATA = '<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>';
+      const ICON_DOC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6"/></svg>';
+
+      /* ---------- helpers ---------- */
+      const copyText = async (text) => {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+        const helper = document.createElement("textarea");
+        helper.value = text;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        document.body.appendChild(helper);
+        helper.select();
+        helper.setSelectionRange(0, helper.value.length);
+        const copied = document.execCommand("copy");
+        helper.remove();
+        if (!copied) throw new Error("Copy command was not available.");
+      };
+      const wireCopy = (button, getText, label) => {
+        const idle = button.textContent;
+        button.addEventListener("click", async () => {
+          try {
+            await copyText(getText());
+            button.textContent = "Copied ✓";
+            button.classList.add("done");
+          } catch (_) {
+            button.textContent = "Copy failed";
+          }
+          setTimeout(() => { button.textContent = idle; button.classList.remove("done"); }, 2000);
+        });
+        if (label) button.setAttribute("aria-label", label);
+      };
+      const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+      const parseIso = iso => {
+        const p = String(iso || "").split("-").map(Number);
+        return p.length === 3 && p.every(Number.isFinite) ? Date.UTC(p[0], p[1] - 1, p[2]) : NaN;
+      };
+      const formatDate = iso => {
+        const p = String(iso || "").split("-");
+        const m = Number(p[1]);
+        if (p.length !== 3 || !m || m > 12) return String(iso || "");
+        return `${Number(p[2])} ${monthNames[m - 1]} ${p[0]}`;
+      };
+      const shortDate = iso => {
+        const p = String(iso || "").split("-"), m = Number(p[1]);
+        return p.length === 3 && m ? `${Number(p[2])} ${monthNames[m - 1].slice(0, 3)}` : String(iso);
+      };
+      const hostOf = url => { try { return new URL(url).hostname.replace(/^www\./, ""); } catch (_) { return ""; } };
+      const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
+
+      /* ---------- source cards ---------- */
+      const makeSourceCard = (item, kind) => {
+        const card = el("article", "src-card reveal" + (kind === "event" ? " event" : ""));
+        const top = el("div", "src-top");
+        const ic = el("span", "src-ic"); ic.innerHTML = kind === "event" ? ICON_DOC : ICON_DATA;
+        ic.setAttribute("aria-hidden", "true");
+        top.append(ic, el("span", "src-host", hostOf(item.url)));
+
+        const h3 = el("h3");
+        const a = el("a", "", item.name);
+        a.href = item.url; a.target = "_blank"; a.rel = "noopener";
+        h3.appendChild(a);
+
+        card.append(top, h3, el("p", "", item.note));
+
+        if (kind === "event") {
+          const ref = el("div", "ref");
+          ref.appendChild(el("p", "cap", "Reference PDMA/PEOC/DSR/2026/Jul-E-22-25. Qualitative corroboration of the event only."));
+          const cp = el("button", "copy-btn", "Copy reference");
+          cp.type = "button";
+          wireCopy(cp, () => "PDMA/PEOC/DSR/2026/Jul-E-22-25", "Copy the report reference number");
+          ref.appendChild(cp);
+          card.appendChild(ref);
+        }
+
+        const actions = el("div", "src-actions");
+        const open = el("a", "link-btn solid", "Open source ↗");
+        open.href = item.url; open.target = "_blank"; open.rel = "noopener";
+        actions.appendChild(open);
+        card.appendChild(actions);
+        return card;
+      };
+
+      /* ---------- scenes: timeline + cards ---------- */
+      const makeSceneCard = (role, scene, track, direction) => {
+        const key = role.toLowerCase();
+        const card = el("article", "scene-card reveal" + (key === "after" ? " after" : ""));
+        card.id = `scene-card-${key}`;
+        card.tabIndex = -1;
+        card.append(el("span", "scene-role", `${role} scene`), el("div", "scene-date", formatDate(scene.date)));
+
+        const facts = el("dl", "scene-facts");
+        [["Track / Frame", track], ["Direction", direction]].forEach(([k, v]) => {
+          const d = el("div"); d.append(el("dt", "", k), el("dd", "", v)); facts.appendChild(d);
+        });
+        card.appendChild(facts);
+
+        card.appendChild(el("p", "scene-id-label", "Scene ID"));
+        const idText = el("code", "scene-id", scene.id);
+        idText.id = `scene-id-${key}`;
+        card.appendChild(idText);
+
+        const actions = el("div", "scene-actions");
+        const copyBtn = el("button", "copy-btn", "Copy ID");
+        copyBtn.type = "button";
+        wireCopy(copyBtn, () => scene.id, `Copy ${key} scene ID`);
+        actions.appendChild(copyBtn);
+        card.appendChild(actions);
+        return card;
+      };
+
+      const buildTimeline = (summary) => {
+        const t0 = parseIso(summary.scene_before.date), t1 = parseIso(summary.scene_after.date), te = parseIso(EVENT_DATE);
+        if (!(t1 > t0)) return null;
+        const DAY = 86400000;
+        const pct = t => ((t - t0) / (t1 - t0)) * 100;
+        const total = Math.round((t1 - t0) / DAY);
+
+        const card = el("div", "tl-card reveal");
+        const top = el("div", "tl-top");
+        top.append(el("h3", "", "Scenes around the flood"), el("span", "tl-total", `${plural(total, "day").toUpperCase()} BETWEEN SCENES`));
+        card.appendChild(top);
+
+        const stage = el("div", "tl-stage");
+        stage.appendChild(el("div", "tl-line"));
+
+        const addMarker = (cls, p, label, sub, target) => {
+          const b = el("button", "tl-m " + cls);
+          b.type = "button"; b.style.left = p + "%";
+          b.setAttribute("aria-label", `${label}, ${sub}. Jump to details.`);
+          b.addEventListener("click", () => {
+            if (target === "event") { const s = $("event-report"); if (s) s.scrollIntoView({ behavior: "smooth" }); return; }
+            const c = $(target);
+            if (!c) return;
+            c.scrollIntoView({ behavior: "smooth", block: "center" });
+            c.classList.add("hl"); c.focus({ preventScroll: true });
+            setTimeout(() => c.classList.remove("hl"), 2200);
+          });
+          const l = el("div", "tl-l"); l.style.left = p + "%";
+          l.append(el("b", "", label), el("span", "", sub));
+          stage.append(b, l);
+        };
+        addMarker("before", 0, "Before scene", shortDate(summary.scene_before.date), "scene-card-before");
+        addMarker("after", 100, "After scene", shortDate(summary.scene_after.date), "scene-card-after");
+
+        const eventInside = te > t0 && te < t1;
+        if (eventInside) {
+          addMarker("event", pct(te), "Flash flood", shortDate(EVENT_DATE), "event");
+          const g1 = Math.round((te - t0) / DAY), g2 = Math.round((t1 - te) / DAY);
+          const gap1 = el("span", "tl-gap", `${plural(g1, "day")} before`); gap1.style.left = pct(te) / 2 + "%";
+          const gap2 = el("span", "tl-gap late", `${plural(g2, "day")} after`); gap2.style.left = (pct(te) + 100) / 2 + "%";
+          stage.append(gap1, gap2);
+        }
+        card.appendChild(stage);
+        card.appendChild(el("p", "tl-note", eventInside
+          ? "The scenes are not simultaneous with the flood. The after scene was taken days after the peak, so standing water may already have gone."
+          : "Dots are placed in proportion to the real dates."));
+        return card;
+      };
+
+      /* ---------- JSON / GeoJSON preview ---------- */
+      const typeLabels = { candidate_flood: "candidate flood patches", permanent_water: "permanent water bodies" };
+      document.querySelectorAll("[data-preview]").forEach(btn => {
+        const panel = $(btn.getAttribute("aria-controls"));
+        const pre = panel.querySelector("pre");
+        const stats = panel.querySelector(".pv-stats");
+        const copyBtn = panel.querySelector(".pv-copy");
+        let payload = "", loaded = false;
+        wireCopy(copyBtn, () => payload);
+
+        btn.addEventListener("click", async () => {
+          const open = panel.hidden;
+          panel.hidden = !open;
+          btn.setAttribute("aria-expanded", String(open));
+          const idle = btn.dataset.kind === "geojson" ? "Count the shapes" : "Preview";
+          btn.textContent = open ? "Hide" : idle;
+          if (!open || loaded) return;
+          pre.textContent = "Loading…";
+          try {
+            const response = await fetch(btn.dataset.preview);
+            if (!response.ok) throw new Error("fetch failed");
+            const obj = JSON.parse(await response.text());
+            if (btn.dataset.kind === "geojson") {
+              const feats = Array.isArray(obj.features) ? obj.features : [];
+              const counts = {};
+              feats.forEach(f => { const t = (f.properties && f.properties.type) || "other"; counts[t] = (counts[t] || 0) + 1; });
+              stats.replaceChildren();
+              Object.keys(counts).forEach(k => stats.appendChild(el("span", "", `${counts[k]} ${typeLabels[k] || k}`)));
+              const first = feats[0] ? feats[0] : {};
+              payload = JSON.stringify(first, null, 2);
+              const props = feats[0] && feats[0].properties ? JSON.stringify(feats[0].properties, null, 2) : "{}";
+              pre.textContent = `Counted from the file itself.\nProperties of the first shape:\n${props}`;
+            } else {
+              payload = JSON.stringify(obj, null, 2);
+              const lines = payload.split("\n");
+              stats.replaceChildren(el("span", "", `${lines.length} lines`));
+              pre.textContent = lines.slice(0, 60).join("\n") + (lines.length > 60 ? `\n… ${lines.length - 60} more lines (download for the full file)` : "");
+            }
+            loaded = true;
+          } catch (_) {
+            pre.textContent = "The preview could not be loaded here. You can still download the file.";
+            copyBtn.hidden = true;
+          }
+        });
+      });
+
+      /* ---------- Data-flow explorer ---------- */
+      const pages = [
+        ["home", "Home"], ["report", "Report"], ["method", "Method"], ["sources", "Sources"], ["footer", "Page footers"]
+      ];
+      const flow = [
+        { file: "summary.json", sub: "Key figures", uses: {
+          home: "The four key figures at the top.", report: "Backup figures and the map's starting view.",
+          method: "Result numbers and the pair check.", sources: "The before and after scene details." } },
+        { file: "quality_report.json", sub: "Thresholds and checks", uses: {
+          report: "Track, frame and pair status.", method: "Thresholds, cleaning settings and pair checks." } },
+        { file: "flood_area_summary.json", sub: "Area totals", note: "Not offered as a download on this page.", uses: {
+          report: "Candidate area, uncertain area and pixel size." } },
+        { file: "flood_boundary.geojson", sub: "Map shapes", uses: {
+          report: "The flood and permanent-water shapes on the map.", method: "Counting the candidate patches." } },
+        { file: "image_bounds.json", sub: "Overlay position", note: "Not offered as a download on this page.", uses: {
+          report: "Where the backscatter change picture sits on the map." } },
+        { file: "sources.json", sub: "References", uses: {
+          sources: "Every reference and note on this page.", footer: "The acknowledgement line in the footers." } }
+      ];
+      const fWrap = $("flow-files"), pWrap = $("flow-pages"), fNote = $("flow-note");
+      const pCards = {};
+      pages.forEach(([key, name]) => {
+        const c = el("div", "pcard"); c.append(el("b", "", name), el("span", "", " "));
+        pWrap.appendChild(c); pCards[key] = c;
+      });
+      const fBtns = flow.map((f, i) => {
+        const b = el("button", "fbtn"); b.type = "button"; b.setAttribute("aria-pressed", "false");
+        const dot = el("span", "dotf"); dot.setAttribute("aria-hidden", "true");
+        const txt = el("span"); txt.append(document.createTextNode(f.file), el("small", "", f.sub));
+        b.append(dot, txt);
+        b.addEventListener("click", () => selectFlow(i));
+        fWrap.appendChild(b);
+        return b;
+      });
+      function selectFlow(i) {
+        const f = flow[i];
+        fBtns.forEach((b, k) => b.setAttribute("aria-pressed", String(k === i)));
+        pages.forEach(([key]) => {
+          const used = Object.prototype.hasOwnProperty.call(f.uses, key);
+          pCards[key].classList.toggle("on", used);
+          pCards[key].lastChild.textContent = used ? f.uses[key] : " ";
+        });
+        const n = Object.keys(f.uses).length;
+        fNote.textContent = `${f.file} feeds ${n} part${n === 1 ? "" : "s"} of the site.` + (f.note ? ` ${f.note}` : "") + " Based on how the pages load their data.";
+      }
+      selectFlow(0);
+
+      /* ---------- In-page nav highlight + reveal ---------- */
+      const navLinks = [...document.querySelectorAll(".subnav a")];
+      if ("IntersectionObserver" in window) {
+        const secIO = new IntersectionObserver(entries => entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          navLinks.forEach(l => l.removeAttribute("aria-current"));
+          const link = navLinks.find(l => l.getAttribute("href") === "#" + en.target.id);
+          if (link) { link.setAttribute("aria-current", "true"); link.parentElement.scrollTo({ left: link.offsetLeft - 24, behavior: "smooth" }); }
+        }), { rootMargin: "-35% 0px -60% 0px" });
+        navLinks.forEach(l => { const s = document.querySelector(l.getAttribute("href")); if (s) secIO.observe(s); });
+      }
+      const reveal = (scope) => {
+        const items = (scope || document).querySelectorAll(".reveal:not(.in)");
+        if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          const io = new IntersectionObserver(entries => entries.forEach(en => {
+            if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+          }), { threshold: 0.1 });
+          items.forEach(i => io.observe(i));
+        } else items.forEach(i => i.classList.add("in"));
+      };
+      reveal();
+
+      /* ---------- Load the data ---------- */
+      const showLoadError = () => {
+        const message = "Source details could not be loaded.";
+        ["satellite-sources", "event-sources", "scene-details", "acknowledgement-content"].forEach(id => {
+          const node = $(id);
+          if (!node) return;
+          node.replaceChildren(el("p", "source-error", message));
+        });
+        $("files-source-status").textContent = message;
+      };
+
+      const load = async () => {
+        try {
+          const [sourcesResponse, summaryResponse] = await Promise.all([fetch("data/sources.json"), fetch("data/summary.json")]);
+          if (!sourcesResponse.ok || !summaryResponse.ok) throw new Error("A source data request failed.");
+          const [sources, summary] = await Promise.all([sourcesResponse.json(), summaryResponse.json()]);
+          if (!Array.isArray(sources.data_sources) || !Array.isArray(sources.event_sources) ||
+              !summary.scene_before || !summary.scene_after) {
+            throw new Error("The source data did not contain the expected records.");
+          }
+
+          $("satellite-sources").replaceChildren(...sources.data_sources.map(i => makeSourceCard(i, "data")));
+          $("event-sources").replaceChildren(...sources.event_sources.map(i => makeSourceCard(i, "event")));
+
+          const sceneBox = $("scene-details");
+          sceneBox.replaceChildren();
+          const timeline = buildTimeline(summary);
+          if (timeline) sceneBox.appendChild(timeline);
+          const grid = el("div", "scene-grid");
+          grid.append(
+            makeSceneCard("Before", summary.scene_before, summary.track, summary.direction),
+            makeSceneCard("After", summary.scene_after, summary.track, summary.direction)
+          );
+          sceneBox.appendChild(grid);
+          const both = el("button", "copy-btn", "Copy both IDs");
+          both.type = "button"; both.style.marginTop = "14px";
+          wireCopy(both, () => `Before: ${summary.scene_before.id}\nAfter: ${summary.scene_after.id}`);
+          sceneBox.appendChild(both);
+
+          // Acknowledgement (the footer line is filled in by common.js from the same file)
+          const ackBox = $("acknowledgement-content");
+          ackBox.replaceChildren();
+          const ackP = el("p", "", sources.acknowledgement);
+          const ackCopy = el("button", "copy-btn", "Copy acknowledgement");
+          ackCopy.type = "button";
+          wireCopy(ackCopy, () => String(sources.acknowledgement || ""));
+          ackBox.append(ackP, ackCopy);
+
+          const repoLink = $("repo-link");
+          if (sources.repo_url) { repoLink.href = sources.repo_url; repoLink.removeAttribute("aria-disabled"); }
+          else repoLink.setAttribute("aria-disabled", "true");
+
+          // At-a-glance chips in the hero
+          const chips = $("hero-chips");
+          chips.replaceChildren(
+            el("li", "", plural(sources.data_sources.length, "data source")),
+            el("li", "", plural(sources.event_sources.length, "event report")),
+            el("li", "", "2 NISAR scenes"),
+            el("li", "", "Provisional products")
+          );
+          chips.hidden = false;
+
+          reveal();
+        } catch (_) {
+          showLoadError();
+        }
+      };
+      load();
+    })();
+  </script>
+</body>
+</html>

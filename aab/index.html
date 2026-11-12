@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Atlas After Blue compares two same-track NISAR L-band radar scenes to map candidate flood change from the 22 July 2026 flash flood in Kandia Gol, Upper Kohistan.">
+  <meta name="theme-color" content="#0B1F3A">
+  <title>Atlas After Blue | NISAR flood-change investigation</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/hero-upgrade.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Atlas After Blue home">
+        <img src="img/logo.png" alt="">
+        <span>Atlas <b>After Blue</b></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-lines" aria-hidden="true"></span><span class="sr-only">Toggle navigation</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="report.html">Report</a>
+        <a href="method.html">Method</a>
+        <a href="sources.html">Sources</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO: Earth is the full-bleed background -->
+    <section class="hero" id="hero">
+      <div class="hero-bg">
+        <img class="hero-bg-img" src="img/earth-orbit-hero.jpg" alt="Earth seen from orbit with a radar satellite scanning the Kandia Gol area of Upper Kohistan" fetchpriority="high">
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-scan" aria-hidden="true"></div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-mark"></span> NASA SPACE APPS CHALLENGE 2026</div>
+          <p class="hero-index mono">  EARTH OBSERVATION · UPPER KOHISTAN · PAKISTAN</p>
+          <h1>Atlas After <span>Blue</span></h1>
+          <p class="hero-lead">AAB compares two same-track NISAR L-band radar scenes from 14 and 26 July 2026. It maps candidate flood change from the 22 July 2026 flash flood in Kandia Gol, Upper Kohistan. It states what the data cannot prove as plainly as what it shows.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="report.html">Open the report <span aria-hidden="true">→</span></a>
+            <a class="quiet-link" href="about.html#audience">Who is this for?</a>
+          </div>
+          <div class="hero-meta">
+            <span><i class="status-dot"></i> Candidate analysis</span>
+            <span class="meta-separator"></span>
+            <span>Kandia Gol, Upper Kohistan</span>
+          </div>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#readout-title" aria-label="Scroll to key figures"><span></span></a>
+
+      <div class="hero-bottom-grid" aria-hidden="true">
+        <span>OBSERVE</span><span>COMPARE</span><span>INTERPRET</span><span>QUALIFY</span>
+      </div>
+    </section>
+
+    <!-- KEY FIGURES -->
+    <section class="readout section-pad" aria-labelledby="readout-title">
+      <div class="section-heading reveal">
+        <div>
+          <p class="section-index">01 / ANALYSIS READOUT</p>
+          <h2 id="readout-title">The signal, at a glance.</h2>
+        </div>
+        <p class="section-intro">Four figures frame the result: a small candidate flood area, a much larger uncertain-change area, the observation gap, and the scene-pair check.</p>
+      </div>
+      <div class="metrics-grid" id="metrics">
+        <article class="metric-card metric-blue reveal" style="--d:0ms">
+          <span class="metric-art metric-art-water" aria-hidden="true">
+            <svg viewBox="0 0 64 44" focusable="false"><path d="M5 13c7-5 13-5 20 0s13 5 20 0 9-5 14-2M5 23c7-5 13-5 20 0s13 5 20 0 9-5 14-2M5 33c7-5 13-5 20 0s13 5 20 0 9-5 14-2"/><path d="M5 6h54" class="water-line-top"/></svg>
+          </span>
+          <p class="metric-label">Candidate flood area</p>
+          <p class="metric-value"><b class="count" data-to="0.0278" data-dec="4">0.0278</b> <span>km²</span></p>
+          <p class="metric-note">Low confidence · unvalidated</p>
+          <a href="report.html#map" class="metric-link">How this was measured <span>↗</span></a>
+        </article>
+        <article class="metric-card metric-amber reveal" style="--d:80ms">
+          <p class="metric-label">Uncertain surface change</p>
+          <p class="metric-value"><b class="count" data-to="11.56" data-dec="2">11.56</b> <span>km²</span></p>
+          <p class="metric-note">Radar got brighter; not counted as flood</p>
+          <a href="method.html#thresholds" class="metric-link">Why it is uncertain <span>↗</span></a>
+        </article>
+        <article class="metric-card metric-navy reveal" style="--d:160ms">
+          <p class="metric-label">From flood peak to post-event scene</p>
+          <p class="metric-value metric-value-calendar"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M7.5 3v4M16.5 3v4M4 9.5h16"/><path d="M8 13h2M14 13h2M8 17h2"/></svg><b class="count" data-to="4" data-dec="0">4</b> <span>days</span></p>
+          <p class="metric-note">22 July event, 26 July scene</p>
+          <a href="report.html#limitations" class="metric-link">The observation gap <span>↗</span></a>
+        </article>
+        <article class="metric-card metric-navy reveal" style="--d:240ms">
+          <p class="metric-label">Scene pair valid</p>
+          <p class="metric-status"><span class="pass-badge">PASS</span></p>
+          <p class="metric-note">Same track, frame and direction</p>
+          <a href="method.html#pair" class="metric-link">Pair check <span>↗</span></a>
+        </article>
+      </div>
+      <p class="data-footnote">Candidate results, not confirmed floodwater. Values are presented with their confidence and validation limits.</p>
+    </section>
+
+    <!-- IMAGE EXPLORER -->
+    <section class="explorer section-pad" aria-labelledby="explorer-title">
+      <div class="section-heading section-heading-light reveal">
+        <div>
+          <p class="section-index">02 / SATELLITE EVIDENCE</p>
+          <h2 id="explorer-title">Look at the scenes.</h2>
+        </div>
+        <p class="section-intro">Explore the supplied NISAR radar images behind the comparison. Switch layers or move the divider to inspect the before-and-after scenes.</p>
+      </div>
+      <div class="explorer-layout reveal">
+        <div class="explorer-main">
+          <div class="viewer-toolbar">
+            <div class="layer-tabs" role="group" aria-label="Choose radar layer">
+              <button class="layer-tab is-active" data-layer="compare" aria-pressed="true">Compare</button>
+              <button class="layer-tab" data-layer="change" aria-pressed="false">Change layer</button>
+              <button class="layer-tab" data-layer="before" aria-pressed="false">14 July</button>
+              <button class="layer-tab" data-layer="after" aria-pressed="false">26 July</button>
+            </div>
+            <span class="viewer-live"><i></i> IMAGE VIEWER</span>
+          </div>
+          <div class="radar-viewer" id="radar-viewer">
+            <div class="compare-stage" id="compare-stage">
+              <img class="radar-image radar-base" src="img/pre.png" alt="NISAR L-band radar scene from 14 July 2026, before the flash flood">
+              <div class="radar-after-clip" id="radar-after-clip">
+                <img class="radar-image radar-after" src="img/post.png" alt="NISAR L-band radar scene from 26 July 2026, after the flash flood">
+              </div>
+              <div class="compare-divider" id="compare-divider"><span>◀</span><span>▶</span></div>
+              <div class="compare-captions"><span>14 JUL / BEFORE</span><span>26 JUL / AFTER</span></div>
+              <input id="compare-range" class="compare-range" type="range" min="0" max="100" value="50" aria-label="Move comparison divider between before and after radar scenes">
+            </div>
+            <img class="single-layer" id="single-layer" src="img/change.png" alt="NISAR radar backscatter change image" hidden>
+            <div class="viewer-corner">NISAR · L-BAND</div>
+          </div>
+          <div class="viewer-foot">
+            <span id="viewer-caption">Drag the divider to compare the 14 July and 26 July scenes.</span>
+            <span class="mono">AAB / RADAR DATA</span>
+          </div>
+        </div>
+        <aside class="explorer-aside">
+          <div class="aside-number mono">FIG. 02</div>
+          <h3>One event.<br>Two observations.</h3>
+          <p>The scene pair brackets the 22 July 2026 flash flood with a before-event observation and a post-event observation four days after the peak.</p>
+          <div class="scene-date"><span class="date-marker"></span><div><b>14 July 2026</b><small>Before-event scene</small></div></div>
+          <div class="scene-date"><span class="date-marker date-marker-blue"></span><div><b>26 July 2026</b><small>Post-event scene</small></div></div>
+          <div class="aside-caution"><span class="caution-icon">!</span><p>The post-event image does not show the flood at its peak. Radar change alone cannot confirm floodwater.</p></div>
+          <a class="aside-link" href="report.html">Read the full interpretation <span>↗</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- EVENT TIMELINE -->
+    <section class="timeline-section section-pad" aria-labelledby="timeline-title">
+      <div class="section-heading reveal">
+        <div><p class="section-index">03 / EVENT CHRONOLOGY</p><h2 id="timeline-title">The four-day gap matters.</h2></div>
+        <p class="section-intro">The satellite observations are not simultaneous with the flood peak. The dates shape what this analysis can and cannot say.</p>
+      </div>
+      <div class="event-timeline">
+        <article class="timeline-stop reveal" style="--d:0ms">
+          <span class="timeline-node"></span><p class="timeline-date mono">14 JUL 2026</p><h3>Before-event scene</h3><p>NISAR L-band radar observation used as the pre-event reference.</p>
+        </article>
+        <article class="timeline-stop timeline-event reveal" style="--d:120ms">
+          <span class="timeline-node"></span><p class="timeline-date mono">22 JUL 2026</p><h3>Flash flood event</h3><p>Flash flood in Kandia Gol, Upper Kohistan.</p>
+        </article>
+        <article class="timeline-stop reveal" style="--d:240ms">
+          <span class="timeline-node"></span><p class="timeline-date mono">26 JUL 2026</p><h3>Post-event scene</h3><p>NISAR L-band radar observation, four days after the flood peak.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- INTERPRETATION -->
+    <section class="interpretation section-pad" aria-labelledby="interp-title">
+      <div class="interpretation-grid">
+        <div class="reveal">
+          <p class="section-index">04 / INTERPRETATION</p>
+          <h2 id="interp-title">Not every change<br>is floodwater.</h2>
+          <p class="interpretation-lead">The analysis separates candidate flood signals from uncertain surface change instead of treating every radar difference as inundation.</p>
+          <a class="button button-dark" href="method.html">Understand the method <span>↗</span></a>
+        </div>
+        <div class="interpretation-notes">
+          <article class="interpretation-row reveal" style="--d:0ms">
+            <span class="interpretation-symbol symbol-blue">01</span>
+            <div><h3>Candidate flood area</h3><p>A small mapped candidate area is retained with low confidence and remains unvalidated.</p></div>
+          </article>
+          <article class="interpretation-row reveal" style="--d:100ms">
+            <span class="interpretation-symbol symbol-amber">02</span>
+            <div><h3>Uncertain surface change</h3><p>Radar-brightening is not counted as flood because the signal may reflect other surface changes.</p></div>
+          </article>
+          <article class="interpretation-row reveal" style="--d:200ms">
+            <span class="interpretation-symbol symbol-navy">03</span>
+            <div><h3>Observation limitation</h3><p>The post-event scene was acquired four days after the event peak, when standing water may have receded.</p></div>
+          </article>
+        </div>
+      </div>
+      <div class="limits-strip reveal"><span class="limits-icon">!</span><p><b>Scientific boundary:</b> Candidate results are not confirmed floodwater. The analysis describes what the available radar observations support and keeps uncertainty visible.</p><a href="report.html#limitations">Read limitations ↗</a></div>
+    </section>
+
+    <!-- EXPLORE SITE -->
+    <section class="explore-pages section-pad" aria-labelledby="continue-title">
+      <div class="section-heading reveal">
+        <div><p class="section-index">05 / CONTINUE THE INVESTIGATION</p><h2 id="continue-title">Go deeper into the evidence.</h2></div>
+        <p class="section-intro">The homepage is the entry point. Explore the report, processing method, source material and project context.</p>
+      </div>
+      <div class="page-links">
+        <a class="page-link reveal" style="--d:0ms" href="report.html"><span class="page-link-index mono">01</span><span><b>Report</b><small>Findings, mapped results and interpretation</small></span><i>↗</i></a>
+        <a class="page-link reveal" style="--d:70ms" href="method.html"><span class="page-link-index mono">02</span><span><b>Method</b><small>Scene pairing, processing and uncertainty</small></span><i>↗</i></a>
+        <a class="page-link reveal" style="--d:140ms" href="sources.html"><span class="page-link-index mono">03</span><span><b>Sources</b><small>Data, references and acknowledgements</small></span><i>↗</i></a>
+        <a class="page-link reveal" style="--d:210ms" href="about.html"><span class="page-link-index mono">04</span><span><b>About</b><small>Project purpose and intended audience</small></span><i>↗</i></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main">
+      <a class="footer-brand" href="index.html"><img src="img/logo.png" alt=""><span>Atlas After Blue</span></a>
+      <p id="ack">AAB · NASA Space Apps Challenge 2026.</p>
+      <p class="footer-disclaimer">Candidate results, not confirmed floodwater.</p>
+    </div>
+    <div class="footer-bottom"><span>EARTH OBSERVATION / KANDIA GOL / 2026</span><a href="#main">Back to top ↑</a></div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

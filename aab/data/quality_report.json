@@ -1,0 +1,17 @@
+{
+  "orbital_check": "PASSED",
+  "orbit_pass_direction": "ASCENDING",
+  "rejected_complex_terms": [
+    "HHHV"
+  ],
+  "mmu_threshold_pixels": 4,
+  "speckle_pixels_filtered": 3323,
+  "supervised_ml_status": "BYPASSED_NO_INDEPENDENT_GROUND_TRUTH",
+  "schema_validation": "PASSED",
+  "thresholds_db": {
+    "decrease": -3.0,
+    "max_post_water": -14.0,
+    "high_increase_anomaly": 3.5
+  },
+  "pixel_area_m2": 100.0
+}

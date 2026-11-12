@@ -1,0 +1,138 @@
+/* ATLAS AFTER BLUE — ABOUT PAGE
+   Load order: style.css → home.css → method.css → about.css
+   method.css supplies the shared hero, sticky sub-nav, section heads (.mhead),
+   .msec / .msec.alt, .mcard, .short and the .reveal animation, so this file only
+   adds what is unique to the About page. */
+
+/* ---------- Hero chips ---------- */
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0;padding:0;list-style:none}
+.hero-chips li{font:600 11px "IBM Plex Mono",monospace;letter-spacing:.09em;text-transform:uppercase;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);color:#DCE7F2}
+
+/* ---------- The name ---------- */
+.name-copy{max-width:850px;margin:0 0 26px}
+.name-lab{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:stretch}
+.name-card{background:#fff;border:1px solid var(--line);border-top:4px solid var(--flood);border-radius:14px;padding:24px;box-shadow:0 10px 30px rgba(11,31,58,.05)}
+.name-card .cap{margin:0 0 14px}
+.letter-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.letter{border:1px solid var(--line);background:#F4F7FA;border-radius:12px;padding:14px 8px;cursor:pointer;font:inherit;color:var(--navy);text-align:center;transition:background .2s,border-color .2s,color .2s,transform .2s}
+.letter b{display:block;font:600 44px/1.1 "IBM Plex Mono",monospace}
+.letter span{display:block;font-size:13px;color:var(--label);margin-top:2px}
+.letter:hover{transform:translateY(-2px);border-color:#9FB3C8}
+.letter[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.letter[aria-pressed="true"] span{color:#B7C9DD}
+.letter-out{margin:16px 0 0;min-height:3.4em;padding:12px 14px;background:#E3F4FD;border-radius:8px;color:#0F4F73;font-size:16px;line-height:1.55}
+.urdu-card{position:relative;overflow:hidden;background:var(--navy);color:#fff;border-radius:14px;padding:24px;display:grid;place-items:center;text-align:center;min-height:240px}
+.urdu-card:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(41,182,246,.3),transparent 65%)}
+.ripples{position:absolute;left:50%;top:44%;width:0;height:0}
+.ripples i{position:absolute;left:-90px;top:-90px;width:180px;height:180px;border-radius:50%;border:2px solid rgba(41,182,246,.55);opacity:0;animation:ripple 4.8s ease-out infinite}
+.ripples i:nth-child(2){animation-delay:1.6s}
+.ripples i:nth-child(3){animation-delay:3.2s}
+@keyframes ripple{0%{transform:scale(.3);opacity:.8}100%{transform:scale(2.1);opacity:0}}
+.urdu-card>div{position:relative}
+.urdu-name{font-family:"Noto Naskh Arabic",serif;font-size:clamp(64px,10vw,96px);line-height:1.2;color:#fff;display:block}
+.urdu-sub{font:600 12px "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#9FB3C8;margin:0}
+.urdu-card.pulse .urdu-name{animation:pop .5s ease}
+@keyframes pop{50%{transform:scale(1.12);color:#8FD8FB}}
+
+/* ---------- Audience ---------- */
+.aud-chips{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px;padding:0;list-style:none}
+.aud-chips li{font:600 13px "IBM Plex Mono",monospace;padding:7px 14px;border-radius:99px;background:#F4F7FA;border:1px solid var(--line);color:var(--navy)}
+.about-copy{max-width:900px;margin:0}
+.why-title{font-size:22px;letter-spacing:-.03em;color:var(--navy);margin:32px 0 14px}
+.why-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.why-card{background:#fff;border:1px solid var(--line);border-top:4px solid var(--flood);border-radius:14px;padding:22px 24px;box-shadow:0 10px 30px rgba(11,31,58,.05)}
+.why-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#E3F4FD;color:#1479AE;margin-bottom:10px}
+.why-ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.why-card h3{margin:0 0 6px;font-size:19px;letter-spacing:-.03em;color:var(--navy)}
+.why-card p{margin:0;color:var(--label);font-size:15.5px}
+.why-card.caution{border-top-color:var(--caution)}
+.why-card.caution .why-ic{background:#FFF1D1;color:#A76B00}
+.why-closing{max-width:900px;margin:22px 0 0}
+
+/* ---------- Team ---------- */
+.team-board{position:relative}
+.team-load-note,.team-load-error{margin:0;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--label);font-size:15px}
+
+/* Photo frame with corner brackets */
+.tm-frame{--bk:var(--flood);position:relative;padding:8px;background:
+  linear-gradient(var(--bk),var(--bk)) top left/14px 2px,
+  linear-gradient(var(--bk),var(--bk)) top left/2px 14px,
+  linear-gradient(var(--bk),var(--bk)) top right/14px 2px,
+  linear-gradient(var(--bk),var(--bk)) top right/2px 14px,
+  linear-gradient(var(--bk),var(--bk)) bottom left/14px 2px,
+  linear-gradient(var(--bk),var(--bk)) bottom left/2px 14px,
+  linear-gradient(var(--bk),var(--bk)) bottom right/14px 2px,
+  linear-gradient(var(--bk),var(--bk)) bottom right/2px 14px;background-repeat:no-repeat}
+.tm-photo{position:relative;aspect-ratio:4/5;border-radius:6px;overflow:hidden;background:var(--navy);display:grid;place-items:center;color:#9FB3C8;font:600 26px "IBM Plex Mono",monospace}
+.tm-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--focus,50% 28%);transform:scale(var(--zoom,1));transform-origin:var(--focus,50% 28%)}
+.tm-photo.loaded{font-size:0}
+
+.tm-name{margin:0 0 4px;font-size:22px;letter-spacing:-.03em;color:var(--navy)}
+.tm-title{margin:0;font:600 12.5px/1.5 "IBM Plex Mono",monospace;color:#1479AE}
+.tm-desc{margin:0;color:var(--label);font-size:15px;line-height:1.7}
+
+/* LinkedIn button: icon plus visible label */
+.tm-li{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;text-decoration:none;font:600 14px "IBM Plex Sans",sans-serif;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 14px;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.tm-li svg{flex:0 0 18px;fill:currentColor}
+.tm-li:hover{background:var(--navy);border-color:var(--navy);color:#fff;transform:translateY(-1px)}
+.tm-li:focus-visible{outline:3px solid var(--caution);outline-offset:3px}
+
+/* Lead: dark feature card, photo beside text, vertically centred */
+.tm-lead{position:relative;overflow:hidden;display:grid;grid-template-columns:210px minmax(0,1fr);gap:36px;align-items:center;background:var(--navy);color:#fff;border-radius:16px;padding:32px 38px}
+.tm-lead:before{content:"";position:absolute;right:-150px;top:-150px;width:460px;height:460px;border-radius:50%;background:repeating-radial-gradient(circle,transparent 0 44px,rgba(41,182,246,.16) 44px 45px);pointer-events:none}
+.tm-lead>*{position:relative;z-index:1}
+.tm-body{display:flex;flex-direction:column;align-items:flex-start;gap:16px;min-width:0}
+.tm-lead .tm-name{font-size:32px;color:#fff}
+.tm-lead .tm-title{color:#8FD8FB;font-size:13.5px}
+.tm-lead .tm-desc{color:#E3ECF5;font-size:16.5px;line-height:1.75;max-width:720px}
+.tm-lead .tm-li{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.35);color:#E3ECF5}
+.tm-lead .tm-li:hover{background:#fff;border-color:#fff;color:var(--navy)}
+
+.team-join{width:2px;height:32px;margin:0 auto;background:var(--navy)}
+
+/* Everyone else: photo and name side by side on top, full-width text below.
+   No narrow photo column, so there is no dead space under the photo. */
+.team-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.team-grid>li{display:flex}
+.tm-card{display:flex;flex-direction:column;gap:18px;width:100%;background:#fff;border:1px solid var(--line);border-top:4px solid var(--flood);border-radius:14px;padding:24px;box-shadow:0 10px 30px rgba(11,31,58,.05)}
+.tm-head{display:grid;grid-template-columns:104px minmax(0,1fr);gap:20px;align-items:center}
+.tm-card .tm-desc{flex:1}
+.tm-card .tm-li{margin-top:2px}
+
+/* ---------- AI declaration ---------- */
+.seg{display:inline-flex;gap:4px;padding:4px;background:#F4F7FA;border:1px solid var(--line);border-radius:99px;margin-bottom:18px}
+.seg button{border:0;background:none;font:600 14px "IBM Plex Sans",sans-serif;color:var(--label);padding:8px 18px;border-radius:99px;cursor:pointer;transition:background .2s,color .2s}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.ai-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.ai-tool{background:#fff;border:1px solid var(--line);border-top:4px solid var(--flood);border-radius:14px;padding:22px 24px;box-shadow:0 10px 30px rgba(11,31,58,.05)}
+.ai-tool .tag{display:inline-block;font:600 11px "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--label)}
+.ai-tool h3{margin:4px 0 6px;font-size:21px;color:var(--navy)}
+.ai-tool p{margin:0;color:var(--label);font-size:15.5px}
+.team-did{background:#fff;border:1px solid var(--line);border-top:4px solid var(--pass);border-radius:14px;padding:22px 24px;box-shadow:0 10px 30px rgba(11,31,58,.05)}
+.team-did ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px}
+.team-did li{display:flex;gap:10px;align-items:flex-start}
+.team-did li:before{content:"✓";flex:0 0 22px;height:22px;border-radius:50%;background:var(--pass);color:#fff;font-size:13px;display:grid;place-items:center;margin-top:3px}
+.ai-full{max-width:900px;margin:18px 0 0}
+
+/* ---------- Independence (uses .short from method.css) ---------- */
+.indep-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.indep-tags span{font:600 11px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);color:#DCE7F2}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1000px){
+  .team-grid{grid-template-columns:1fr}
+}
+@media(max-width:860px){
+  .name-lab,.ai-grid,.team-did ul{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .why-grid{grid-template-columns:1fr}
+  .tm-lead{grid-template-columns:1fr;gap:20px;padding:24px 22px}
+  .tm-lead .tm-frame{width:180px}
+  .tm-lead .tm-name{font-size:26px}
+  .tm-card{padding:20px}
+  .tm-head{grid-template-columns:88px minmax(0,1fr);gap:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  .ripples i,.urdu-card.pulse .urdu-name{animation:none}
+}

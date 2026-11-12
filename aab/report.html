@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Candidate flood change | Atlas After Blue</title>
+  <meta name="description" content="Explore a cautious radar-based estimate of candidate flood change in Kandia Gol, Upper Kohistan, using two NISAR scenes from July 2026.">
+  <meta name="theme-color" content="#0B1F3A">
+  <link rel="icon" href="img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="css/report.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <!-- Icon sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-map" viewBox="0 0 24 24"><path d="M9 4 3 6.5v13L9 17l6 3 6-2.5v-13L15 7zM9 4v13M15 7v13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+      <symbol id="i-swipe" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 4v16M8.5 10 6 12l2.5 2M15.5 10 18 12l-2.5 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-sbs" viewBox="0 0 24 24"><rect x="3" y="5" width="8" height="14" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="5" width="8" height="14" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+      <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="4" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="13" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="13" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+      <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+      <symbol id="i-peak" viewBox="0 0 24 24"><path d="M3 18 9 11l4 4 8-9M3 21h18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-waves" viewBox="0 0 24 24"><path d="M3 8c3-3 6 3 9 0s6 3 9 0M3 13c3-3 6 3 9 0s6 3 9 0M3 18c3-3 6 3 9 0s6 3 9 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-shadow" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 20 20 4M4 14l10-10M10 20 20 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-stream" viewBox="0 0 24 24"><path d="M6 3c5 3-3 6 1 9s-2 6 2 9M15 3c4 3-2 5 2 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-nodata" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    </defs>
+  </svg>
+
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <!-- Same header as the home page, so logo and site name match exactly -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Atlas After Blue home">
+        <img src="img/logo.png" alt="">
+        <span>Atlas <b>After Blue</b></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-lines" aria-hidden="true"></span><span class="sr-only">Toggle navigation</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="report.html" aria-current="page">Report</a>
+        <a href="method.html">Method</a>
+        <a href="sources.html">Sources</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="report-hero">
+      <div class="rwrap">
+        <div class="eyebrow"><span class="eyebrow-mark"></span> REPORT</div>
+        <h1>Candidate flood change</h1>
+        <p class="report-intro">Radar suggests a small area of possible flooding in Kandia Gol, about <span class="mono" id="conclusion-area">0.0278</span> km², roughly four football fields. Most of the change it detected looks like disturbed ground, not standing water. This is a candidate estimate, not confirmed floodwater, and it is meant to guide field checks, not replace them.</p>
+      </div>
+    </section>
+
+    <!-- Interactive viewer -->
+    <section class="viewer-section" id="map" aria-label="Interactive map and image comparison">
+      <div class="rwrap">
+        <div class="viewer-card">
+          <div class="tablist" role="tablist" aria-label="Report views">
+            <button class="tab" role="tab" id="tab-map" aria-selected="true" aria-controls="panel-map" type="button"><svg aria-hidden="true"><use href="#i-map"/></svg>Interactive map</button>
+            <button class="tab" role="tab" id="tab-swipe" aria-selected="false" aria-controls="panel-swipe" tabindex="-1" type="button"><svg aria-hidden="true"><use href="#i-swipe"/></svg>Before/after swipe</button>
+            <button class="tab" role="tab" id="tab-sbs" aria-selected="false" aria-controls="panel-sbs" tabindex="-1" type="button"><svg aria-hidden="true"><use href="#i-sbs"/></svg>Side-by-side compare</button>
+          </div>
+
+          <!-- Panel 1: map -->
+          <div class="tabpanel" role="tabpanel" id="panel-map" aria-labelledby="tab-map">
+            <div class="map-stage">
+              <div id="leaflet-map" role="region" aria-label="Map showing candidate flood patches, permanent water and backscatter change" tabindex="0">
+                <div class="map-error">Loading map data…</div>
+              </div>
+
+              <div class="map-panel" aria-label="Map controls">
+                <div class="pcard">
+                  <h3>Layers</h3>
+                  <label class="switch"><span class="sw-label"><i class="dot" style="background:#29B6F6"></i>Candidate flood</span><input type="checkbox" id="toggle-candidate" checked><span class="track"></span></label>
+                  <label class="switch"><span class="sw-label"><i class="dot" style="background:#7E57C2"></i>Permanent water</span><input type="checkbox" id="toggle-permanent" checked><span class="track"></span></label>
+                  <label class="switch"><span class="sw-label"><i class="dot" style="background:linear-gradient(90deg,#2166AC,#F7F7F7,#B2182B);border:1px solid #AAB5C2"></i>Backscatter change</span><input type="checkbox" id="toggle-change"><span class="track"></span></label>
+                  <div class="change-extra" id="change-legend" aria-label="Backscatter change legend">
+                    <label for="change-opacity">Overlay opacity</label>
+                    <input type="range" id="change-opacity" min="10" max="100" value="60">
+                    <div class="ramp"><span>Darker</span><i></i><span>Brighter</span></div>
+                  </div>
+                </div>
+                <div class="pcard">
+                  <h3>Basemap</h3>
+                  <div class="seg" role="group" aria-label="Basemap">
+                    <button type="button" data-base="street" aria-pressed="true">Map</button>
+                    <button type="button" data-base="sat" aria-pressed="false">Satellite</button>
+                  </div>
+                </div>
+                <button class="reset-btn" id="reset-view" type="button">Reset to study area</button>
+              </div>
+              <div class="map-hint" id="map-hint">Click the map, then scroll to zoom</div>
+            </div>
+            <p class="panel-cap">Overlay position is approximate. Purple areas were already water before the event and are excluded from the candidate area. Select a patch to see its area.</p>
+            <p class="data-error" id="map-data-status" role="status" aria-live="polite"></p>
+          </div>
+
+          <!-- Panel 2: swipe -->
+          <div class="tabpanel" role="tabpanel" id="panel-swipe" aria-labelledby="tab-swipe" hidden>
+            <div class="swipe" id="swipe-comparison">
+              <img src="img/pre.png" alt="Radar backscatter before the event (14 July 2026)">
+              <img class="top" id="post-image" src="img/post.png" alt="Radar backscatter after the event (26 July 2026)">
+              <span class="tag left">14 July 2026</span>
+              <span class="tag right">26 July 2026</span>
+              <span class="bar" id="swipe-bar" aria-hidden="true"></span>
+              <label class="sr-only" for="swipe-range">Move the divider to compare the radar scenes</label>
+              <input id="swipe-range" type="range" min="0" max="100" value="50" step="1" aria-label="Before and after image comparison divider">
+            </div>
+            <p class="panel-cap" style="text-align:center">Drag across the image. Both scenes use the same track, frame, polarisation and grey range. Left: 14 July 2026. Right: 26 July 2026.</p>
+          </div>
+
+          <!-- Panel 3: side by side -->
+          <div class="tabpanel" role="tabpanel" id="panel-sbs" aria-labelledby="tab-sbs" hidden>
+            <div class="sbs-tools">
+              <p>Hover over any image to zoom all three in sync.</p>
+              <button class="pill-btn" id="sync-zoom" type="button" aria-pressed="true">Sync zoom: on</button>
+            </div>
+            <div class="sbs">
+              <figure>
+                <div class="sbs-panel"><img src="img/pre.png" alt="Radar backscatter before the event (14 July 2026)"></div>
+                <figcaption><b>14 July 2026</b><span>Before</span></figcaption>
+              </figure>
+              <figure>
+                <div class="sbs-panel"><img src="img/post.png" alt="Radar backscatter after the event (26 July 2026)"></div>
+                <figcaption><b>26 July 2026</b><span>After</span></figcaption>
+              </figure>
+              <figure>
+                <div class="sbs-panel"><img src="img/change.png" alt="Backscatter change between 14 and 26 July 2026"></div>
+                <figcaption><b>Backscatter change</b><span>Blue darker · red brighter</span></figcaption>
+              </figure>
+            </div>
+            <p class="panel-cap">All scenes use the same track, frame, polarisation and grey range.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Evidence -->
+    <section class="rsec" aria-labelledby="evidence-title">
+      <div class="rwrap">
+        <div class="rhead reveal">
+          <div><p class="section-index">EVIDENCE</p><h2 id="evidence-title">What the data shows</h2></div>
+          <p class="sub">What the radar pair supports, and what it cannot prove.</p>
+        </div>
+        <div class="ev-grid">
+          <article class="ev-card shows reveal">
+            <h3>What the data shows</h3>
+            <ul class="ev-list">
+              <li><span class="ev-ic"><svg aria-hidden="true"><use href="#i-grid"/></svg></span><span><span class="mono" id="patch-count">55</span> small patches, <span class="mono" id="area-total">0.0278</span> km² in total, on a <span class="mono" id="pixel-size">10</span> m grid.</span></li>
+              <li><span class="ev-ic"><svg aria-hidden="true"><use href="#i-link"/></svg></span><span>The two scenes form a valid same-track pair (Track <span class="mono" id="track-number">84</span>, Frame <span class="mono" id="frame-number">19</span>, <span id="orbit-direction">ascending</span>).</span></li>
+              <li><span class="ev-ic"><svg aria-hidden="true"><use href="#i-sun"/></svg></span><span>A much larger area, <span class="mono" id="uncertain-area">11.56</span> km², got brighter. That points to surface change, not standing water.</span></li>
+              <li><span class="ev-ic"><svg aria-hidden="true"><use href="#i-doc"/></svg></span><span>The event itself is confirmed only qualitatively, by the PDMA KP situation report.</span></li>
+            </ul>
+          </article>
+          <article class="ev-card cannot reveal" style="transition-delay:90ms">
+            <h3>What it cannot prove</h3>
+            <ul class="ev-list">
+              <li><span class="ev-ic"><svg aria-hidden="true"><use href="#i-nodata"/></svg></span><span>That any patch is confirmed floodwater.</span></li>
+              <li><span class="ev-ic"><svg aria-hidden="true"><use href="#i-peak"/></svg></span><span>How large the flood was at its peak. No satellite imaged the area between 19 and 24 July.</span></li>
+              <li><span class="ev-ic"><svg aria-hidden="true"><use href="#i-shadow"/></svg></span><span>That the brighter areas are debris. Radar cannot tell debris from other surface changes.</span></li>
+              <li><span class="ev-ic"><svg aria-hidden="true"><use href="#i-waves"/></svg></span><span>That the real extent is not larger. Debris-laden flash floods may be under-counted.</span></li>
+              <li><span class="ev-ic"><svg aria-hidden="true"><use href="#i-target"/></svg></span><span>Anything against ground truth. No optical or field data was used.</span></li>
+            </ul>
+          </article>
+        </div>
+        <p class="data-error" id="summary-data-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- Limitations -->
+    <section class="rsec" id="limitations" style="padding-top:10px" aria-labelledby="limits-title">
+      <div class="rwrap">
+        <div class="rhead reveal">
+          <div><p class="section-index">LIMITATIONS</p><h2 id="limits-title">Limitations</h2></div>
+        </div>
+        <div class="limits-wrap reveal">
+          <div class="limits-top">
+            <p>Select a heading for detail.</p>
+            <button class="pill-btn" id="expand-all" type="button">Expand all</button>
+          </div>
+          <details class="limit">
+            <summary><span class="lim-n">01</span>The peak was never imaged.</summary>
+            <p>No satellite passed over between 19 July (14:03 UTC) and 24 July (13:54 UTC). The 26 July scene shows conditions about four days after the cloudburst.</p>
+          </details>
+          <details class="limit">
+            <summary><span class="lim-n">02</span>Flash floods scour more than they pool.</summary>
+            <p>Fast mountain floods move boulders and debris, which make the surface rougher and brighter on radar, instead of leaving calm, dark water. PDMA reported 7 to 8 houses washed away.</p>
+          </details>
+          <details class="limit">
+            <summary><span class="lim-n">03</span>Steep valleys hide parts of the scene.</summary>
+            <p>Radar shadow and layover cover about 14% of the 5 km study area and can hide narrow stretches of river.</p>
+          </details>
+          <details class="limit">
+            <summary><span class="lim-n">04</span>Narrow streams are too small for the grid.</summary>
+            <p>Torrents narrower than about 20 m blend with their banks at 10 m resolution, and the cleaning step can remove them.</p>
+          </details>
+          <details class="limit">
+            <summary><span class="lim-n">05</span>Provisional data, no ground truth.</summary>
+            <p>Both NISAR products are provisional, and the classification uses physical thresholds without an independent flood outline.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Same footer as the home page -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <a class="footer-brand" href="index.html"><img src="img/logo.png" alt=""><span>Atlas After Blue</span></a>
+      <p id="ack">AAB · NASA Space Apps Challenge 2026.</p>
+      <p class="footer-disclaimer">Candidate results, not confirmed floodwater.</p>
+    </div>
+    <div class="footer-bottom"><span>EARTH OBSERVATION / KANDIA GOL / 2026</span><a href="#content">Back to top ↑</a></div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+  <script src="js/common.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const $ = id => document.getElementById(id);
+      const get = (obj, path, fallback) => {
+        const value = path.split(".").reduce((v, key) => v && v[key] !== undefined ? v[key] : undefined, obj);
+        return value === undefined || value === null ? fallback : value;
+      };
+      const setText = (id, value) => {
+        if (value !== undefined && value !== null && value !== "") {
+          const node = $(id);
+          if (node) node.textContent = value;
+        }
+      };
+      // pairs = [[object, "key"], ...]; returns the first value that exists
+      const pick = (pairs, fallback) => {
+        for (const [obj, key] of pairs) {
+          const value = get(obj, key, undefined);
+          if (value !== undefined && value !== null) return value;
+        }
+        return fallback;
+      };
+      const fetchJson = async (path) => {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error(`${path}: ${response.status}`);
+        return response.json();
+      };
+
+      let map = null;
+      let fitStudy = () => {};
+
+      /* ---------- Tabs ---------- */
+      const tabs = [...document.querySelectorAll(".tab")];
+      const selectTab = (tab, focus) => {
+        tabs.forEach(t => {
+          const on = t === tab;
+          t.setAttribute("aria-selected", String(on));
+          t.tabIndex = on ? 0 : -1;
+          $(t.getAttribute("aria-controls")).hidden = !on;
+        });
+        if (focus) tab.focus();
+        if (tab.id === "tab-map" && map) requestAnimationFrame(() => map.invalidateSize());
+      };
+      tabs.forEach((tab, i) => {
+        tab.addEventListener("click", () => selectTab(tab));
+        tab.addEventListener("keydown", e => {
+          let next = null;
+          if (e.key === "ArrowRight") next = (i + 1) % tabs.length;
+          if (e.key === "ArrowLeft") next = (i - 1 + tabs.length) % tabs.length;
+          if (e.key === "Home") next = 0;
+          if (e.key === "End") next = tabs.length - 1;
+          if (next !== null) { e.preventDefault(); selectTab(tabs[next], true); }
+        });
+      });
+
+      /* ---------- Before/after swipe ---------- */
+      const slider = $("swipe-range");
+      const postImage = $("post-image");
+      const swipeBar = $("swipe-bar");
+      const updateSwipe = () => {
+        const value = Number(slider.value);
+        postImage.style.clipPath = `inset(0 0 0 ${value}%)`;
+        swipeBar.style.left = `${value}%`;
+        slider.setAttribute("aria-valuetext", `${value}% of the after image visible`);
+      };
+      slider.addEventListener("input", updateSwipe);
+      updateSwipe();
+
+      /* ---------- Side-by-side with synced zoom ---------- */
+      const panels = [...document.querySelectorAll(".sbs-panel")];
+      const zoomBtn = $("sync-zoom");
+      let zoomOn = true;
+      const setZoom = (origin) => panels.forEach(p => {
+        const img = p.querySelector("img");
+        img.style.transformOrigin = origin || "50% 50%";
+        img.style.transform = origin ? "scale(2.2)" : "";
+      });
+      panels.forEach(p => {
+        p.addEventListener("pointermove", e => {
+          if (!zoomOn || e.pointerType === "touch") return;
+          const r = p.getBoundingClientRect();
+          setZoom(`${((e.clientX - r.left) / r.width * 100).toFixed(1)}% ${((e.clientY - r.top) / r.height * 100).toFixed(1)}%`);
+        });
+        p.addEventListener("pointerleave", () => setZoom(null));
+      });
+      zoomBtn.addEventListener("click", () => {
+        zoomOn = !zoomOn;
+        zoomBtn.setAttribute("aria-pressed", String(zoomOn));
+        zoomBtn.textContent = `Sync zoom: ${zoomOn ? "on" : "off"}`;
+        if (!zoomOn) setZoom(null);
+      });
+
+      /* ---------- Limitations: expand all ---------- */
+      const limits = [...document.querySelectorAll("details.limit")];
+      const expandBtn = $("expand-all");
+      expandBtn.addEventListener("click", () => {
+        const open = limits.some(d => !d.open);
+        limits.forEach(d => { d.open = open; });
+        expandBtn.textContent = open ? "Collapse all" : "Expand all";
+      });
+
+      /* ---------- Scroll reveal ---------- */
+      const reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const io = new IntersectionObserver(entries => entries.forEach(en => {
+          if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        }), { threshold: 0.12 });
+        reveals.forEach(el => io.observe(el));
+      } else {
+        reveals.forEach(el => el.classList.add("in"));
+      }
+
+      /* ---------- Report data (values unchanged) ---------- */
+      Promise.all([
+        fetchJson("data/summary.json"),
+        fetchJson("data/quality_report.json"),
+        fetchJson("data/flood_area_summary.json"),
+        fetchJson("data/flood_boundary.geojson")
+      ]).then(([summary, quality, areaSummary, geojson]) => {
+        const features = Array.isArray(geojson.features) ? geojson.features : [];
+        const candidateFeatures = features.filter(f => get(f, "properties.type", "") === "candidate_flood");
+        const area = pick([[areaSummary, "flooded_area_sqkm"], [summary, "flooded_area_sqkm"]], 0.0278);
+        const uncertainArea = pick([[areaSummary, "uncertain_area_sqkm"], [summary, "uncertain_area_sqkm"]], 11.56);
+        const pixelSize = pick([[areaSummary, "pixel_size_m"], [summary, "pixel_size_m"], [quality, "pixel_size_m"]], 10);
+        const track = pick([[quality, "track"], [summary, "track"]], 84);
+        const frame = pick([[quality, "frame"], [summary, "frame"]], 19);
+        const direction = pick([[quality, "direction"], [summary, "direction"]], "ascending");
+        const pairValid = pick([[quality, "pair_valid"], [summary, "pair_valid"]], true);
+
+        setText("conclusion-area", Number(area).toFixed(4));
+        setText("area-total", Number(area).toFixed(4));
+        setText("uncertain-area", Number(uncertainArea).toFixed(2));
+        setText("pixel-size", pixelSize);
+        setText("patch-count", candidateFeatures.length || 55);
+        setText("track-number", track);
+        setText("frame-number", frame);
+        setText("orbit-direction", direction);
+        setText("badge-track", track);
+        setText("badge-frame", frame);
+        setText("badge-direction", direction);
+        if (pairValid === false) {
+          $("summary-data-status").textContent =
+            "Data quality note: the supplied quality report does not mark this scene pair as valid.";
+        }
+
+        // Map failures are handled separately so they don't hide the figures above.
+        return initMap(summary, geojson).catch(() => {
+          $("leaflet-map").innerHTML = '<div class="map-error">The map could not be started.</div>';
+          $("map-data-status").textContent = "The map library did not load. Check your connection and reload.";
+        });
+      }).catch(() => {
+        $("leaflet-map").innerHTML = '<div class="map-error">The map data could not be loaded.</div>';
+        $("map-data-status").textContent = "Report figures could not be loaded from the project data files.";
+      });
+
+      /* ---------- Map ---------- */
+      async function initMap(summary, geojson) {
+        if (!window.L) throw new Error("Leaflet did not load");
+        const mapNode = $("leaflet-map");
+        mapNode.innerHTML = "";
+        map = L.map(mapNode, { scrollWheelZoom: false });
+
+        const street = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        const satellite = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+          maxZoom: 19, maxNativeZoom: 17,
+          attribution: "Tiles &copy; Esri, Maxar, Earthstar Geographics"
+        });
+
+        // Change overlay lives in its own pane BELOW the vector pane so it can
+        // never cover (or block clicks on) the flood patches.
+        map.createPane("change");
+        map.getPane("change").style.zIndex = 350;
+
+        const all = Array.isArray(geojson.features) ? geojson.features : [];
+        const byType = type => ({ type: "FeatureCollection", features: all.filter(f => get(f, "properties.type", "") === type) });
+
+        const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+        const makePopup = feature => {
+          const props = feature.properties || {};
+          const areaM2 = Number(props.area_m2);
+          return `<strong>${esc(props.name || "Mapped area")}</strong><br>Area: ${Number.isFinite(areaM2) ? areaM2.toLocaleString() + " m²" : "not available"}`;
+        };
+        const makeLayer = (type, color) => {
+          const base = { color, weight: 1, fillColor: color, fillOpacity: 0.55 };
+          const layer = L.geoJSON(byType(type), {
+            style: base,
+            onEachFeature: (feature, l) => {
+              l.bindPopup(makePopup(feature));
+              l.on("mouseover", () => l.setStyle({ weight: 2.5, fillOpacity: 0.85 }));
+              l.on("mouseout", () => layer.resetStyle(l));
+            }
+          }).addTo(map);
+          return layer;
+        };
+        const candidateLayer = makeLayer("candidate_flood", "#29B6F6");
+        const permanentLayer = makeLayer("permanent_water", "#7E57C2");
+
+        let changeLayer = null;
+        try {
+          const boundsData = await fetchJson("data/image_bounds.json");
+          const bounds = get(boundsData, "bounds_latlon", null);
+          if (Array.isArray(bounds) && bounds.length === 2) {
+            changeLayer = L.imageOverlay("img/change.png", bounds, { opacity: 0.6, pane: "change" });
+          }
+        } catch (_) {
+          $("map-data-status").textContent = "The backscatter change overlay bounds could not be loaded.";
+        }
+
+        // Layer switches
+        const bind = (id, layer) => $(id).addEventListener("change", e => {
+          e.target.checked ? map.addLayer(layer) : map.removeLayer(layer);
+        });
+        bind("toggle-candidate", candidateLayer);
+        bind("toggle-permanent", permanentLayer);
+
+        const changeToggle = $("toggle-change");
+        const changeExtra = $("change-legend");
+        changeToggle.addEventListener("change", () => {
+          if (!changeLayer) {
+            changeToggle.checked = false;
+            $("map-data-status").textContent = "The backscatter change overlay is unavailable.";
+            return;
+          }
+          changeToggle.checked ? map.addLayer(changeLayer) : map.removeLayer(changeLayer);
+          changeExtra.classList.toggle("visible", changeToggle.checked);
+        });
+        $("change-opacity").addEventListener("input", e => {
+          if (changeLayer) changeLayer.setOpacity(Number(e.target.value) / 100);
+        });
+
+        // Basemap switch
+        const baseBtns = [...document.querySelectorAll("[data-base]")];
+        baseBtns.forEach(btn => btn.addEventListener("click", () => {
+          const sat = btn.dataset.base === "sat";
+          if (sat) { map.removeLayer(street); map.addLayer(satellite); }
+          else { map.removeLayer(satellite); map.addLayer(street); }
+          baseBtns.forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+        }));
+
+        // Scroll-zoom only once the map has focus, so page scrolling isn't hijacked
+        const hint = $("map-hint");
+        map.on("focus", () => { map.scrollWheelZoom.enable(); hint.classList.add("gone"); });
+        map.on("blur", () => map.scrollWheelZoom.disable());
+
+        // Initial view
+        const center = get(summary, "map_center", null);
+        fitStudy = () => {
+          const b = candidateLayer.getBounds();
+          if (b.isValid()) map.fitBounds(b, { padding: [30, 30], maxZoom: 15 });
+          else if (Array.isArray(center) && center.length >= 2) map.setView([Number(center[0]), Number(center[1])], Number(center[2]) || 11);
+          else if (center && typeof center === "object" && center.lat !== undefined) map.setView([Number(center.lat), Number(center.lon)], Number(center.zoom) || 11);
+          else map.setView([35.25, 72.95], 11);
+        };
+        fitStudy();
+        $("reset-view").addEventListener("click", fitStudy);
+        setTimeout(() => map.invalidateSize(), 0);
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Method | Atlas After Blue</title>
+  <meta name="description" content="Learn how Atlas After Blue compares matched NISAR radar scenes and applies transparent thresholds to flag candidate flood change.">
+  <meta name="theme-color" content="#0B1F3A">
+  <link rel="icon" href="img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/method.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Atlas After Blue home">
+        <img src="img/logo.png" alt="">
+        <span>Atlas <b>After Blue</b></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-lines" aria-hidden="true"></span><span class="sr-only">Toggle navigation</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="method.html" aria-current="page">Method</a>
+        <a href="sources.html">Sources</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="m-hero">
+    <div class="mwrap rwrap">
+      <div class="eyebrow"><span class="eyebrow-mark"></span> METHOD</div>
+      <h1>How candidate water is flagged</h1>
+      <p class="lead">A plain-language walk-through of how Atlas After Blue turns two radar images into a small, careful flood map. Almost everything on this page can be played with, so you can see each rule working instead of just reading about it.</p>
+    </div>
+  </section>
+
+  <nav class="subnav" aria-label="On this page">
+    <div class="mwrap">
+      <a href="#basics">Radar basics</a>
+      <a href="#steps">Five steps</a>
+      <a href="#thresholds">Thresholds</a>
+      <a href="#try">Try the rule</a>
+      <a href="#clean">Cleanup</a>
+      <a href="#pair">Pair validity</a>
+      <a href="#record">Record</a>
+      <a href="#glossary">Glossary</a>
+    </div>
+  </nav>
+
+  <main id="content">
+
+    <!-- 1. RADAR BASICS -->
+    <section class="msec" id="basics" aria-labelledby="basics-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="basics-title">How radar sees water</h2>
+          <p class="sub">NISAR sends a radar signal to the ground and measures how much comes back. Pick a surface to see what happens to the signal.</p>
+        </div>
+
+        <div class="stage reveal">
+          <div class="stage-vis">
+            <svg id="radar-svg" viewBox="0 0 760 340" role="img" aria-label="Diagram of a radar satellite sending a signal to the ground. The signal bounces differently from water, rough ground and rubble.">
+              <defs>
+                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#071321"/><stop offset="1" stop-color="#16345E"/></linearGradient>
+                <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#29B6F6"/></marker>
+                <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F5C451"/></marker>
+              </defs>
+              <rect width="760" height="340" fill="url(#sky)"/>
+              <g id="r-ground"></g>
+              <g id="r-rays"></g>
+              <g transform="translate(150,70) rotate(-20)">
+                <rect x="-50" y="-6" width="34" height="12" rx="2" fill="#2F6DB5" stroke="#9FC4EE"/>
+                <rect x="16" y="-6" width="34" height="12" rx="2" fill="#2F6DB5" stroke="#9FC4EE"/>
+                <rect x="-14" y="-11" width="28" height="22" rx="3" fill="#D6E0EC"/>
+                <circle cx="0" cy="12" r="4" fill="#F5C451"/>
+              </g>
+              <text x="150" y="112" fill="#9FB3C8" font-size="13" text-anchor="middle" font-family="IBM Plex Mono, monospace">NISAR</text>
+              <text x="262" y="132" fill="#29B6F6" font-size="12" font-family="IBM Plex Mono, monospace">radar signal</text>
+              <text id="r-label" x="380" y="226" fill="#fff" font-size="14" font-weight="600" font-family="IBM Plex Sans, sans-serif"></text>
+            </svg>
+          </div>
+          <div class="stage-side">
+            <div class="surf-list" role="group" aria-label="Choose a surface">
+              <button class="surf" type="button" data-s="water" aria-pressed="true"><i style="background:#1F78B4"></i><span>Calm water<small>Like a mirror</small></span></button>
+              <button class="surf" type="button" data-s="ground" aria-pressed="false"><i style="background:#8a7a62"></i><span>Rough ground<small>Soil, fields, stones</small></span></button>
+              <button class="surf" type="button" data-s="rubble" aria-pressed="false"><i style="background:#5a4a3a"></i><span>Rubble &amp; buildings<small>Edges and corners</small></span></button>
+            </div>
+            <p class="surf-text" id="surf-text" aria-live="polite"></p>
+            <div class="meter-row">
+              <div class="swatch" id="surf-swatch" aria-hidden="true"></div>
+              <div class="meter-col">
+                <div class="lbl"><span>Signal that comes back</span><span id="surf-db" class="mono"></span></div>
+                <div class="meter"><i id="surf-meter"></i></div>
+                <div class="note" id="surf-look" style="margin-top:6px"></div>
+              </div>
+            </div>
+            <p class="note">Typical example values, for illustration only. They are not measurements from this study.</p>
+          </div>
+        </div>
+
+        <div class="callout reveal">
+          <div class="ba" aria-hidden="true">
+            <figure><i style="background:#9A9A9A"></i>Before</figure>
+            <span class="arrow">→</span>
+            <figure><i style="background:#2A2A2A"></i>After</figure>
+          </div>
+          <p>Calm water bounces the signal away, so it looks dark. Rough ground, rubble and buildings send more back, so they look bright. <b>AAB looks for places that turned dark between two dates.</b></p>
+        </div>
+
+        <div class="dbdemo">
+          <article class="mcard reveal">
+            <h3>What does “dB” mean?</h3>
+            <p>Radar images are measured in decibels (dB). It is a scale that works by multiplying instead of adding, so small numbers hide big changes.</p>
+            <p><b>Every +3 dB roughly doubles the signal. Every −3 dB roughly halves it.</b></p>
+            <div class="chip-btns" role="group" aria-label="Try an example change">
+              <button class="chip-btn" type="button" data-db="-3">−3 dB</button>
+              <button class="chip-btn" type="button" data-db="0">No change</button>
+              <button class="chip-btn" type="button" data-db="3.5">+3.5 dB</button>
+              <button class="chip-btn" type="button" data-db="-10">−10 dB</button>
+            </div>
+          </article>
+          <article class="mcard reveal" style="--d:90ms">
+            <div class="range-row">
+              <label for="db-slider"><span>Change between the two dates</span><span class="mono" id="db-readout">−3 dB</span></label>
+              <input id="db-slider" type="range" min="-10" max="10" step="0.5" value="-3">
+            </div>
+            <div class="bars" aria-hidden="true">
+              <div class="bar-row"><div class="lab"><span>Before</span><span>1×</span></div><div class="bar-track"><i class="bar-before" style="width:50%"></i></div></div>
+              <div class="bar-row"><div class="lab"><span>After</span><span id="db-factor">0.5×</span></div><div class="bar-track"><i class="bar-after" id="db-bar" style="width:35%"></i></div></div>
+            </div>
+            <p class="big-fact" id="db-fact" aria-live="polite">About half the signal</p>
+            <p class="note">The bars use the same log-style scale as dB, so equal steps look equal.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. FIVE STEPS -->
+    <section class="msec alt" id="steps" aria-labelledby="steps-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="steps-title">Five steps</h2>
+          <p class="sub">Choose a step to read what happens, in simple words and in detail.</p>
+        </div>
+
+        <div class="stepper reveal">
+          <div class="step-list" role="tablist" aria-label="Method steps" aria-orientation="vertical">
+            <button class="step-btn" role="tab" id="st-1" aria-selected="true" aria-controls="sp-1" type="button"><span class="n">1</span><span class="t">Pick a matching pair</span></button>
+            <button class="step-btn" role="tab" id="st-2" aria-selected="false" aria-controls="sp-2" tabindex="-1" type="button"><span class="n">2</span><span class="t">Prepare the images</span></button>
+            <button class="step-btn" role="tab" id="st-3" aria-selected="false" aria-controls="sp-3" tabindex="-1" type="button"><span class="n">3</span><span class="t">Compare the two dates</span></button>
+            <button class="step-btn" role="tab" id="st-4" aria-selected="false" aria-controls="sp-4" tabindex="-1" type="button"><span class="n">4</span><span class="t">Apply the rule and clean up</span></button>
+            <button class="step-btn" role="tab" id="st-5" aria-selected="false" aria-controls="sp-5" tabindex="-1" type="button"><span class="n">5</span><span class="t">Set aside uncertain areas</span></button>
+          </div>
+
+          <div>
+            <div class="step-panel" role="tabpanel" id="sp-1" aria-labelledby="st-1">
+              <h3>Pick a matching pair.</h3>
+              <p>Both scenes come from the same satellite track, frame and viewing direction (<span id="pair-track-value">Track 84, Frame 19</span>, <span id="pair-direction-value">ascending</span>). Different viewing angles make steep hills cast different shadows, which can look like change, so mixed pairs are rejected.</p>
+              <div class="simple"><b>IN SIMPLE WORDS</b>Take both photos from the same spot. If you take one photo from the left and one from the right, the shadows move, and it looks like the land changed when it did not.</div>
+              <div class="mini"><span class="pill ok">Scene A · same track, frame, direction</span><span class="sep">=</span><span class="pill ok">Scene B · same track, frame, direction</span><span class="sep">→</span><span class="pill ok">Valid pair ✓</span></div>
+            </div>
+            <div class="step-panel" role="tabpanel" id="sp-2" aria-labelledby="st-2" hidden>
+              <h3>Prepare the images.</h3>
+              <p>We use terrain-corrected radar data (NISAR GCOV, HH polarisation), mask out invalid pixels, and convert to decibels (dB). On this scale, a 3 dB change means the signal roughly halved or doubled.</p>
+              <div class="simple"><b>IN SIMPLE WORDS</b>The raw radar data is tidied up first. It is placed correctly on the map, pixels with no usable data are ignored, and the numbers are put on the dB scale so they are easy to compare.</div>
+              <div class="mini"><span class="pill">Terrain-corrected data</span><span class="sep">→</span><span class="pill">Invalid pixels masked</span><span class="sep">→</span><span class="pill mono">Converted to dB</span></div>
+            </div>
+            <div class="step-panel" role="tabpanel" id="sp-3" aria-labelledby="st-3" hidden>
+              <h3>Compare the two dates.</h3>
+              <p>For every 10 m pixel, we subtract the “before” value from the “after” value.</p>
+              <div class="simple"><b>IN SIMPLE WORDS</b>For each small square on the ground, we ask one question: is it darker or brighter now than before? A negative answer means darker. A positive answer means brighter.</div>
+              <div class="mini"><span class="pill mono">after − before = change</span><span class="sep">e.g.</span><span class="pill mono">−18 − (−9) = −9 dB</span><span class="pill blue">Got darker</span></div>
+              <p class="note" style="margin-top:12px">The numbers above are an example. You can try your own further down, in “Try the rule”.</p>
+            </div>
+            <div class="step-panel" role="tabpanel" id="sp-4" aria-labelledby="st-4" hidden>
+              <h3>Apply the rule and clean up.</h3>
+              <p>A pixel is a candidate when it got at least 3 dB darker and is now at or below −14 dB. Permanent water is excluded. Groups smaller than 4 pixels (400 m²) are removed, which filters out 3,323 isolated speckle pixels.</p>
+              <div class="simple"><b>IN SIMPLE WORDS</b>A square is only flagged if it got clearly darker <em>and</em> is now dark enough to look like calm water. Lakes and rivers that were already there are ignored. Tiny lonely dots are deleted because they are usually just radar noise.</div>
+              <div class="mini"><span class="pill blue">Got ≥ 3 dB darker</span><span class="sep">+</span><span class="pill blue">Now ≤ −14 dB</span><span class="sep">+</span><span class="pill">Not permanent water</span><span class="sep">+</span><span class="pill">Group of 4+ pixels</span></div>
+              <div class="step-nav"><a href="#try">Try the rule yourself ↓</a><a href="#clean">See the cleanup ↓</a></div>
+            </div>
+            <div class="step-panel" role="tabpanel" id="sp-5" aria-labelledby="st-5" hidden>
+              <h3>Set aside uncertain areas.</h3>
+              <p>Pixels that got at least 3.5 dB brighter are held as uncertain surface change: <span id="uncertain-area">11.56</span> km². They are not counted as flood.</p>
+              <div class="simple"><b>IN SIMPLE WORDS</b>Places that got much brighter are not water. They may be rough, disturbed ground. We do not know exactly what happened there, so we keep them separate instead of guessing.</div>
+              <div class="mini"><span class="pill amber">Got ≥ 3.5 dB brighter</span><span class="sep">→</span><span class="pill amber">Uncertain surface change</span><span class="sep">→</span><span class="pill">Not counted as flood</span></div>
+            </div>
+            <div class="step-nav">
+              <button class="btn-dark" id="step-prev" type="button">← Previous</button>
+              <span class="note" id="step-count">Step 1 of 5</span>
+              <button class="btn-dark" id="step-next" type="button">Next →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. THRESHOLDS -->
+    <section class="msec" id="thresholds" aria-labelledby="thr-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="thr-title">The three thresholds</h2>
+          <p class="sub">A threshold is just a line. Cross it and the rule says “yes”. The needles below move when you use the sliders in “Try the rule”.</p>
+        </div>
+        <div class="gauges">
+          <article class="gcard reveal" id="gc-dec">
+            <div class="gauge-svg" id="gs-dec"></div>
+            <p class="g-name">Decrease</p>
+            <h3 id="threshold-decrease">−3 dB or lower</h3>
+            <p class="g-live" id="gl-dec">Right now: –</p>
+            <p class="desc">Got at least 3 dB darker between the two dates, roughly half the signal.</p>
+            <details><summary>In simple words</summary><p>This asks: did this spot get clearly darker? A tiny dip could be noise, so it must drop by at least 3 dB, about half the signal, to count.</p></details>
+          </article>
+          <article class="gcard reveal" id="gc-water" style="--d:90ms">
+            <div class="gauge-svg" id="gs-water"></div>
+            <p class="g-name">Post-water</p>
+            <h3 id="threshold-water">−14 dB or lower</h3>
+            <p class="g-live" id="gl-water">Right now: –</p>
+            <p class="desc">After the event, dark enough to look like calm water.</p>
+            <details><summary>In simple words</summary><p>This asks: is it dark enough <em>now</em> to look like calm water? A spot can get darker and still be too bright to be water, so both rules must pass together.</p></details>
+          </article>
+          <article class="gcard reveal" id="gc-bright" style="--d:180ms">
+            <div class="gauge-svg" id="gs-bright"></div>
+            <p class="g-name">Anomaly</p>
+            <h3 id="threshold-brighter">+3.5 dB or higher</h3>
+            <p class="g-live" id="gl-bright">Right now: –</p>
+            <p class="desc">Got at least 3.5 dB brighter. Treated as rough surface change, not water.</p>
+            <details><summary>In simple words</summary><p>This asks: did the spot get much brighter instead? Water does not make radar images brighter, so these spots are set aside as “uncertain” and are not counted as flood.</p></details>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TRY THE RULE -->
+    <section class="msec alt" id="try" aria-labelledby="try-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="try-title">Test the rule on one pixel</h2>
+          <p class="sub">Set how bright one 10 m square was before and after the flood. The page applies the same rule AAB uses and tells you what happens.</p>
+        </div>
+        <div class="play">
+          <article class="mcard reveal">
+            <h3>Your pixel</h3>
+            <div class="chip-btns" role="group" aria-label="Example pixels" id="presets">
+              <button class="chip-btn" type="button" data-b="-9" data-a="-19">Flooded valley floor</button>
+              <button class="chip-btn" type="button" data-b="-6" data-a="-10">Darker, but not dark enough</button>
+              <button class="chip-btn" type="button" data-b="-23" data-a="-24">Dark all along</button>
+              <button class="chip-btn" type="button" data-b="-12" data-a="-7">Got brighter</button>
+              <button class="chip-btn" type="button" data-b="-10" data-a="-10.5">Hardly changed</button>
+            </div>
+            <div class="slider-block">
+              <label for="pb"><span>Before the event</span><span class="val" id="pb-v">−9 dB</span></label>
+              <input id="pb" type="range" min="-30" max="0" step="0.5" value="-9">
+            </div>
+            <div class="slider-block">
+              <label for="pa"><span>After the event</span><span class="val" id="pa-v">−19 dB</span></label>
+              <input id="pa" type="range" min="-30" max="0" step="0.5" value="-19">
+            </div>
+            <p><b>Change = after − before = <span class="mono" id="pc-v">−10 dB</span></b></p>
+            <label class="check"><input type="checkbox" id="pperm"> This spot was already water before the event</label>
+          </article>
+
+          <article class="mcard reveal" style="--d:90ms">
+            <h3>What the rule says</h3>
+            <ul class="checks" aria-live="polite">
+              <li><span class="ck" id="ck-1">–</span><span id="tx-1"></span></li>
+              <li><span class="ck" id="ck-2">–</span><span id="tx-2"></span></li>
+              <li><span class="ck" id="ck-3">–</span><span id="tx-3"></span></li>
+              <li><span class="ck" id="ck-4">–</span><span id="tx-4"></span></li>
+            </ul>
+            <div class="verdict none" id="verdict" aria-live="polite"><b id="v-title"></b><p id="v-text"></p></div>
+            <p class="note" style="margin-top:12px">A flagged pixel still has to survive the cleanup step below: it must belong to a group of at least 4 touching pixels.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. CLEANUP -->
+    <section class="msec" id="clean" aria-labelledby="clean-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="clean-title">Why tiny dots are removed</h2>          <p class="sub">Radar images are grainy. Lonely flagged pixels are usually noise, so small groups are deleted. Drag the slider to change the minimum group size.</p>
+        </div>
+        <div class="clean">
+          <article class="mcard reveal">
+            <h3>Practice map (made-up pixels)</h3>
+            <div class="pxgrid" id="pxgrid" role="img" aria-label="A small grid of flagged pixels showing which groups are kept and which are removed"></div>
+            <div class="legend2"><span><i style="background:var(--flood)"></i>Kept</span><span><i style="background:repeating-linear-gradient(45deg,#E4A9A9,#E4A9A9 3px,#F6DADA 3px,#F6DADA 6px)"></i>Removed</span><span><i style="background:#EAF0F5"></i>Not flagged</span></div>
+          </article>
+          <article class="mcard reveal" style="--d:90ms">
+            <div class="range-row">
+              <label for="mmu-slider"><span>Smallest group we keep</span><span class="mono" id="mmu-readout">4 pixels</span></label>
+              <input id="mmu-slider" type="range" min="1" max="10" step="1" value="4">
+            </div>
+            <p class="note" id="mmu-area">4 pixels × 100 m² = 400 m²</p>
+            <div class="stat-row">
+              <div class="stat"><b id="kept-groups">0</b><span>groups kept</span></div>
+              <div class="stat"><b id="removed-groups">0</b><span>groups removed</span></div>
+              <div class="stat"><b id="kept-px">0</b><span>pixels kept</span></div>
+              <div class="stat"><b id="removed-px">0</b><span>pixels removed</span></div>
+            </div>
+            <p class="note">A “group” is a set of flagged pixels that touch each other. The slider starts at the value AAB really uses.</p>
+            <div class="result-line">
+              <p>Real result: <span class="mono" id="result-patches">55</span> candidate patches, <span class="mono" id="result-pixels">278</span> pixels, <span class="mono" id="result-area">0.0278</span> km². <span class="mono" id="demo-speckle">3,323</span> isolated speckle pixels were filtered out.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PAIR VALIDITY -->
+    <section class="msec alt" id="pair" aria-labelledby="pair-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="pair-title">Pair validity</h2>
+          <p class="sub">Why the two scenes must be taken from the same viewpoint. Switch between a valid pair and a mixed pair.</p>
+        </div>
+        <div class="pairgrid">
+          <div class="vp-card reveal">
+            <svg id="vp-svg" viewBox="0 0 800 290" role="img" aria-label="A hill with radar shadows. A valid pair has the same shadow in both scenes. A mixed pair has different shadows."></svg>
+            <div class="vp-body">
+              <div class="chip-btns" role="group" aria-label="Pair type">
+                <button class="chip-btn" type="button" data-vp="same" aria-pressed="true">Same viewpoint (valid)</button>
+                <button class="chip-btn" type="button" data-vp="mixed" aria-pressed="false">Different viewpoints (rejected)</button>
+              </div>
+              <p id="vp-text" style="margin:14px 0 0" aria-live="polite"></p>
+            </div>
+          </div>
+          <article class="mcard reveal" style="--d:90ms">
+            <h3>The checks</h3>
+            <div class="pair-row">
+              <span class="condition">Same track and frame (<span id="pair-track-label">Track 84, Frame 19</span>)</span>
+              <span class="badge pass" id="pair-track-status">PASS</span>
+            </div>
+            <div class="pair-row">
+              <span class="condition">Same viewing direction (<span id="pair-direction-label">Ascending</span>)</span>
+              <span class="badge pass" id="pair-direction-status">PASS</span>
+            </div>
+            <div class="pair-row">
+              <span class="condition">Orbital compatibility check</span>
+              <span class="badge pass" id="pair-orbital-status">PASS</span>
+            </div>
+            <p class="note" style="margin-top:14px">A pair from different directions would fail this check and be rejected.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. RECORD -->
+    <section class="msec" id="record" aria-labelledby="rec-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="rec-title">Processing record</h2>
+          <p class="sub">The exact settings behind the result, for anyone who wants to check the work.</p>
+        </div>
+        <div class="rec-grid">
+          <article class="rec-card reveal">
+            <h3>Cleaning</h3>
+            <p>Groups under <span class="mono" id="record-mmu">4</span> pixels (<span class="mono" id="record-area">400</span> m²) removed; <span class="mono" id="record-speckle">3,323</span> speckle pixels filtered.</p>
+          </article>
+          <article class="rec-card reveal" id="ml-row" style="--d:80ms">
+            <h3>Why no machine learning</h3>
+            <p>Supervised machine learning was bypassed because there is no independent ground truth to train or test it. The result comes from a transparent rule anyone can check.</p>
+          </article>
+          <article class="rec-card reveal" style="--d:160ms">
+            <h3>Data status</h3>
+            <p>NISAR GCOV, <span id="record-polarization">HH</span>, <span class="mono" id="record-pixel-size">10</span> m pixels, provisional product maturity, <span id="record-version">v1.0 (16-stage NISAR GCOV pipeline)</span>.</p>
+          </article>
+          <article class="rec-card reveal" style="--d:240ms">
+            <h3>Technical details</h3>
+            <details>
+              <summary>Show technical details</summary>
+              <p>Schema validation: <span id="record-schema">PASSED</span>. Rejected complex term: <span class="mono" id="record-rejected">HHHV</span>. Pixel area: <span class="mono" id="record-pixel-area">100</span> m².</p>
+            </details>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. GLOSSARY -->
+    <section class="msec alt" id="glossary" aria-labelledby="gloss-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="gloss-title">Words in plain English</h2>
+          <p class="sub">Tap any term for a short, simple explanation.</p>
+        </div>
+        <div class="gloss reveal">
+          <div class="gloss-list" id="gloss-list" role="group" aria-label="Terms"></div>
+          <div class="gloss-panel" aria-live="polite"><h3 id="gloss-term"></h3><p id="gloss-def"></p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IN SHORT -->
+    <section class="msec">
+      <div class="mwrap">
+        <article class="short reveal">
+          <h2>In short</h2>
+          <p>AAB takes two radar images from the same viewpoint, one before and one after the flood. Where the ground turned dark enough to look like calm water, it marks a possible flood. Where it turned much brighter, it marks uncertain change instead. Nothing here is confirmed without a field check.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main">
+      <a class="footer-brand" href="index.html"><img src="img/logo.png" alt=""><span>Atlas After Blue</span></a>
+      <p id="ack">AAB · NASA Space Apps Challenge 2026.</p>
+      <p class="footer-disclaimer">Candidate results, not confirmed floodwater.</p>
+    </div>
+    <div class="footer-bottom"><span>EARTH OBSERVATION / KANDIA GOL / 2026</span><a href="#content">Back to top ↑</a></div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    (() => {
+      "use strict";
+      const $ = id => document.getElementById(id);
+      const setText = (id, value) => {
+        const node = $(id);
+        if (node && value !== undefined && value !== null && value !== "") node.textContent = value;
+      };
+      const fmtNum = (v, d = 1) => {
+        const n = Math.round(Number(v) * Math.pow(10, d)) / Math.pow(10, d);
+        return (n < 0 ? "−" : n > 0 ? "+" : "") + Math.abs(n);
+      };
+      const fmtDb = v => fmtNum(v) + " dB";
+      const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+      const fetchJson = async path => {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error(`Could not load ${path}`);
+        return response.json();
+      };
+      const valueAt = (object, path, fallback) => {
+        const value = path.split(".").reduce((c, k) => c && c[k] !== undefined ? c[k] : undefined, object);
+        return value === undefined || value === null ? fallback : value;
+      };
+
+      // Thresholds and pixel size (replaced by the JSON values when they load)
+      const T = { dec: -3, water: -14, bright: 3.5 };
+      let PIXEL_AREA = 100;
+      let MMU = 4;
+
+      /* ================= 1. Radar demo ================= */
+      const S = { x: 150, y: 70 }, C = { x: 400, y: 250 }, P = { x: -5.6, y: 8.3 };
+      const surfaces = {
+        water: {
+          ground: '<rect x="0" y="250" width="760" height="90" fill="#1F78B4"/><path d="M0 266h760M0 286h760M0 306h760" stroke="#9AD3F2" stroke-opacity=".35" stroke-width="2" stroke-dasharray="14 10"/>',
+          rays: '<line x1="400" y1="250" x2="660" y2="72" stroke="#29B6F6" stroke-width="3" stroke-opacity=".75" marker-end="url(#arr)" class="flow"/>',
+          label: "Bounces away", labelX: 560, labelY: 150,
+          text: "Calm water acts like a mirror. The signal hits it at an angle and bounces away from the satellite, so almost nothing comes back. In the image, calm water looks very dark.",
+          level: 8, db: "≈ −20 dB", look: "Looks very dark", swatch: "#262626"
+        },
+        ground: {
+          ground: '<polygon points="0,340 0,252 30,244 55,256 85,246 120,258 150,245 190,256 225,247 260,258 300,246 335,257 370,245 410,258 445,247 480,257 520,246 560,258 600,247 640,256 680,246 720,257 760,248 760,340" fill="#8a7a62"/>',
+          rays: '<line x1="394" y1="258" x2="144" y2="78" stroke="#F5C451" stroke-width="2.5" stroke-opacity=".6" marker-end="url(#arr2)" class="flow"/>' +
+                '<g stroke="#29B6F6" stroke-width="2" stroke-opacity=".6" class="flow">' +
+                '<line x1="400" y1="250" x2="520" y2="190"/><line x1="400" y1="250" x2="470" y2="170"/><line x1="400" y1="250" x2="600" y2="225"/><line x1="400" y1="250" x2="330" y2="180"/><line x1="400" y1="250" x2="270" y2="215"/></g>',
+          label: "Scatters in many directions", labelX: 450, labelY: 160,
+          text: "Rough ground scatters the signal in many directions. Some of it finds its way back to the satellite, so the ground looks medium grey.",
+          level: 45, db: "≈ −12 dB", look: "Looks mid grey", swatch: "#8C8C8C"
+        },
+        rubble: {
+          ground: '<rect x="0" y="262" width="760" height="78" fill="#5a4a3a"/><g fill="#7a6650" stroke="#3a2e22"><rect x="300" y="226" width="34" height="36"/><rect x="345" y="238" width="26" height="24"/><rect x="430" y="214" width="40" height="48"/><rect x="484" y="236" width="30" height="26"/><rect x="560" y="230" width="36" height="32"/><rect x="230" y="240" width="30" height="22"/></g><polygon points="372,262 384,236 400,262" fill="#7a6650" stroke="#3a2e22"/>',
+          rays: '<line x1="394" y1="258" x2="144" y2="78" stroke="#F5C451" stroke-width="7" stroke-opacity=".95" marker-end="url(#arr2)" class="flow"/>' +
+                '<line x1="400" y1="250" x2="470" y2="200" stroke="#29B6F6" stroke-width="2" stroke-opacity=".55" class="flow"/>',
+          label: "Bounces straight back", labelX: 420, labelY: 190,
+          text: "Rubble, rocks and buildings have many edges and corners that throw the signal straight back. A lot comes back, so these places look bright.",
+          level: 90, db: "≈ −5 dB", look: "Looks bright", swatch: "#E4E4E4"
+        }
+      };
+      const beam = `<line x1="${S.x}" y1="${S.y}" x2="${C.x}" y2="${C.y}" stroke="#29B6F6" stroke-width="3.5" marker-end="url(#arr)" class="flow"/>`;
+      function setSurface(key) {
+        const s = surfaces[key];
+        $("r-ground").innerHTML = s.ground;
+        $("r-rays").innerHTML = beam + s.rays;
+        const lbl = $("r-label");
+        lbl.textContent = s.label; lbl.setAttribute("x", s.labelX); lbl.setAttribute("y", s.labelY);
+        $("surf-text").textContent = s.text;
+        $("surf-meter").style.width = s.level + "%";
+        $("surf-db").textContent = s.db;
+        $("surf-look").textContent = s.look;
+        $("surf-swatch").style.background = s.swatch;
+        document.querySelectorAll(".surf").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.s === key)));
+      }
+      document.querySelectorAll(".surf").forEach(b => b.addEventListener("click", () => setSurface(b.dataset.s)));
+      setSurface("water");
+
+      /* ================= dB demo ================= */
+      const dbSlider = $("db-slider");
+      function updateDb() {
+        const v = Number(dbSlider.value);
+        const factor = Math.pow(10, v / 10);
+        $("db-readout").textContent = fmtDb(v);
+        $("db-factor").textContent = (factor >= 10 ? factor.toFixed(0) : factor >= 1 ? factor.toFixed(1) : factor.toFixed(2)) + "×";
+        const bar = $("db-bar");
+        bar.style.width = ((v + 10) / 20 * 100) + "%";
+        bar.classList.toggle("up", v > 0);
+        let fact;
+        if (Math.abs(v) < 0.25) fact = "No real change";
+        else if (v < 0) fact = factor <= 0.12 ? "About a tenth of the signal" : factor < 0.4 ? "Less than half the signal" : factor < 0.6 ? "About half the signal" : "A little less signal";
+        else fact = factor >= 8 ? "About ten times the signal" : factor > 2.4 ? "More than double the signal" : factor > 1.7 ? "About double the signal" : "A little more signal";
+        $("db-fact").textContent = fact;
+        document.querySelectorAll("[data-db]").forEach(b => b.setAttribute("aria-pressed", String(Number(b.dataset.db) === v)));
+      }
+      dbSlider.addEventListener("input", updateDb);
+      document.querySelectorAll("[data-db]").forEach(b => b.addEventListener("click", () => { dbSlider.value = b.dataset.db; updateDb(); }));
+      updateDb();
+
+      /* ================= 2. Stepper ================= */
+      const stepBtns = [...document.querySelectorAll(".step-btn")];
+      const stepPanels = stepBtns.map(b => $(b.getAttribute("aria-controls")));
+      let stepIdx = 0;
+      function selectStep(i, focus) {
+        stepIdx = clamp(i, 0, stepBtns.length - 1);
+        stepBtns.forEach((b, k) => {
+          const on = k === stepIdx;
+          b.setAttribute("aria-selected", String(on));
+          b.tabIndex = on ? 0 : -1;
+          stepPanels[k].hidden = !on;
+        });
+        $("step-prev").disabled = stepIdx === 0;
+        $("step-next").disabled = stepIdx === stepBtns.length - 1;
+        $("step-count").textContent = `Step ${stepIdx + 1} of ${stepBtns.length}`;
+        if (focus) stepBtns[stepIdx].focus();
+      }
+      stepBtns.forEach((b, i) => {
+        b.addEventListener("click", () => selectStep(i));
+        b.addEventListener("keydown", e => {
+          if (e.key === "ArrowDown" || e.key === "ArrowRight") { e.preventDefault(); selectStep((i + 1) % stepBtns.length, true); }
+          if (e.key === "ArrowUp" || e.key === "ArrowLeft") { e.preventDefault(); selectStep((i - 1 + stepBtns.length) % stepBtns.length, true); }
+        });
+      });
+      $("step-prev").addEventListener("click", () => selectStep(stepIdx - 1));
+      $("step-next").addEventListener("click", () => selectStep(stepIdx + 1));
+      selectStep(0);
+
+      /* ================= 3. Gauges ================= */
+      const R = 80, CX = 100, CY = 100;
+      const pt = (f, r = R) => { const a = Math.PI * (1 - f); return [CX + r * Math.cos(a), CY - r * Math.sin(a)]; };
+      const arc = (f1, f2) => {
+        const [x1, y1] = pt(f1), [x2, y2] = pt(f2);
+        return `M${x1.toFixed(2)} ${y1.toFixed(2)}A${R} ${R} 0 0 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`;
+      };
+      const gauges = {
+        dec:    { el: "gs-dec",    min: -10, max: 10, cls: "blue",  zone: () => [-10, T.dec], mark: () => T.dec,    label: "Decrease gauge" },
+        water:  { el: "gs-water",  min: -30, max: 0,  cls: "blue",  zone: () => [-30, T.water], mark: () => T.water, label: "Post-water gauge" },
+        bright: { el: "gs-bright", min: -10, max: 10, cls: "amber", zone: () => [T.bright, 10], mark: () => T.bright, label: "Anomaly gauge" }
+      };
+      const gaugeVal = { dec: T.dec, water: T.water, bright: T.bright };
+      function buildGauge(key) {
+        const g = gauges[key];
+        const f = v => (clamp(v, g.min, g.max) - g.min) / (g.max - g.min);
+        const [lo, hi] = g.zone();
+        const [tx1, ty1] = pt(f(g.mark()), R - 13), [tx2, ty2] = pt(f(g.mark()), R + 13);
+        $(g.el).innerHTML =
+          `<svg viewBox="0 0 200 124" role="img" aria-label="${g.label}, scale ${g.min} to ${g.max} dB">` +
+          `<path class="g-bg" d="${arc(0, 1)}"/>` +
+          `<path class="g-zone ${g.cls}" d="${arc(f(lo), f(hi))}"/>` +
+          `<line class="g-tick" x1="${tx1.toFixed(1)}" y1="${ty1.toFixed(1)}" x2="${tx2.toFixed(1)}" y2="${ty2.toFixed(1)}"/>` +
+          `<g class="g-needle-wrap" id="${g.el}-n" style="transform:rotate(-90deg);transform-origin:100px 100px"><line class="g-needle" x1="100" y1="100" x2="100" y2="34"/></g>` +
+          `<circle class="g-hub" cx="100" cy="100" r="7"/>` +
+          `<text class="g-end" x="14" y="119">${g.min}</text><text class="g-end" x="186" y="119" text-anchor="end">${g.max > 0 ? "+" + g.max : g.max}</text>` +
+          `</svg>`;
+        moveNeedle(key, gaugeVal[key]);
+      }
+      function moveNeedle(key, value) {
+        const g = gauges[key];
+        gaugeVal[key] = value;
+        const f = (clamp(value, g.min, g.max) - g.min) / (g.max - g.min);
+        const n = $(g.el + "-n");
+        if (n) n.style.transform = `rotate(${(-90 + f * 180).toFixed(1)}deg)`;
+      }
+      const buildAllGauges = () => Object.keys(gauges).forEach(buildGauge);
+      buildAllGauges();
+
+      /* ================= 4. Rule playground ================= */
+      const pb = $("pb"), pa = $("pa"), pperm = $("pperm");
+      function evaluate() {
+        const before = Number(pb.value), after = Number(pa.value);
+        const change = after - before;
+        const perm = pperm.checked;
+        $("pb-v").textContent = fmtDb(before);
+        $("pa-v").textContent = fmtDb(after);
+        $("pc-v").textContent = fmtDb(change);
+
+        const c1 = change <= T.dec;
+        const c2 = after <= T.water;
+        const c3 = !perm;
+        const c4 = change >= T.bright;
+        const flood = c1 && c2 && c3;
+        const unc = !flood && c4;
+
+        const mark = (id, ok) => { const e = $(id); e.textContent = ok ? "✓" : "✕"; e.className = "ck " + (ok ? "yes" : "no"); };
+        mark("ck-1", c1); mark("ck-2", c2); mark("ck-3", c3); mark("ck-4", !c4);
+        $("tx-1").textContent = `Got at least ${Math.abs(T.dec)} dB darker? Change is ${fmtDb(change)}.`;
+        $("tx-2").textContent = `Now at or below ${fmtDb(T.water)}? After is ${fmtDb(after)}.`;
+        $("tx-3").textContent = perm ? "Already water before the event, so it is excluded." : "Not permanent water, so it can be counted.";
+        $("tx-4").textContent = c4 ? `Got at least ${T.bright} dB brighter, so it is held as uncertain.` : `Did not get ${T.bright} dB brighter.`;
+
+        const v = $("verdict");
+        v.className = "verdict " + (flood ? "flood" : unc ? "unc" : "none");
+        if (flood) {
+          $("v-title").textContent = "Candidate flood pixel";
+          $("v-text").textContent = "It got clearly darker and is now dark enough to look like calm water. It is only a candidate, and it still has to survive the cleanup step.";
+        } else if (unc) {
+          $("v-title").textContent = "Uncertain surface change";
+          $("v-text").textContent = "It got much brighter. That points to rough or disturbed ground, not standing water, so it is kept apart and not counted as flood.";
+        } else {
+          let why;
+          if (perm) why = "It was already water before the event, so there is nothing new to flag.";
+          else if (!c1 && c2) why = "It is dark, but it did not get darker by enough between the two dates.";
+          else if (c1 && !c2) why = "It got darker, but it is still too bright to look like calm water.";
+          else why = "It did not change enough to pass either rule.";
+          $("v-title").textContent = "Not flagged";
+          $("v-text").textContent = why;
+        }
+
+        // gauges follow the pixel
+        moveNeedle("dec", change); moveNeedle("water", after); moveNeedle("bright", change);
+        const live = (id, text, hit, cardId) => { $(id).textContent = text; $(cardId).classList.toggle("hit", hit); };
+        live("gl-dec", `Right now: ${fmtDb(change)} ${c1 ? "✓" : "✕"}`, c1, "gc-dec");
+        live("gl-water", `Right now: ${fmtDb(after)} ${c2 ? "✓" : "✕"}`, c2, "gc-water");
+        live("gl-bright", `Right now: ${fmtDb(change)} ${c4 ? "✓" : "✕"}`, c4, "gc-bright");
+      }
+      [pb, pa, pperm].forEach(e => e.addEventListener("input", evaluate));
+      document.querySelectorAll("#presets .chip-btn").forEach(b => b.addEventListener("click", () => {
+        pb.value = b.dataset.b; pa.value = b.dataset.a; pperm.checked = false; evaluate();
+      }));
+      evaluate();
+
+      /* ================= 5. Cleanup demo ================= */
+      const COLS = 14, ROWS = 9;
+      const flagged = new Set();
+      [[1,1],[8,2],[3,13],[5,0],[4,5],[4,6],[7,8],[7,9],[8,9],[1,4],[1,5],[2,4],[2,5],
+       [5,11],[5,12],[6,11],[6,12],[7,11],[7,12],[1,8],[1,9],[1,10],[2,8],[2,9],[2,10],[3,8],[3,9],[3,10]]
+        .forEach(([r, c]) => flagged.add(r * COLS + c));
+      // connected groups (touching pixels, up/down/left/right)
+      const groupOf = new Map(); const groups = [];
+      flagged.forEach(i => {
+        if (groupOf.has(i)) return;
+        const stack = [i], members = [];
+        groupOf.set(i, groups.length);
+        while (stack.length) {
+          const cur = stack.pop(); members.push(cur);
+          const r = Math.floor(cur / COLS), c = cur % COLS;
+          [[r-1,c],[r+1,c],[r,c-1],[r,c+1]].forEach(([nr, nc]) => {
+            if (nr < 0 || nc < 0 || nr >= ROWS || nc >= COLS) return;
+            const ni = nr * COLS + nc;
+            if (flagged.has(ni) && !groupOf.has(ni)) { groupOf.set(ni, groups.length); stack.push(ni); }
+          });
+        }
+        groups.push(members);
+      });
+      const grid = $("pxgrid");
+      const cells = [];
+      for (let i = 0; i < ROWS * COLS; i++) { const d = document.createElement("div"); d.className = "px"; grid.appendChild(d); cells.push(d); }
+      const mmuSlider = $("mmu-slider");
+      let mmuTouched = false;
+      function updateClean() {
+        const min = Number(mmuSlider.value);
+        let kg = 0, rg = 0, kp = 0, rp = 0;
+        groups.forEach(g => { if (g.length >= min) { kg++; kp += g.length; } else { rg++; rp += g.length; } });
+        cells.forEach((cell, i) => {
+          if (!flagged.has(i)) { cell.className = "px"; return; }
+          cell.className = "px " + (groups[groupOf.get(i)].length >= min ? "kept" : "removed");
+        });
+        $("mmu-readout").textContent = `${min} pixel${min === 1 ? "" : "s"}`;
+        $("mmu-area").textContent = `${min} pixel${min === 1 ? "" : "s"} × ${PIXEL_AREA} m² = ${(min * PIXEL_AREA).toLocaleString("en-US")} m²`;
+        $("kept-groups").textContent = kg; $("removed-groups").textContent = rg;
+        $("kept-px").textContent = kp; $("removed-px").textContent = rp;
+      }
+      mmuSlider.addEventListener("input", () => { mmuTouched = true; updateClean(); });
+      updateClean();
+
+      /* ================= 6. Viewpoint demo ================= */
+      const vpSvg = $("vp-svg");
+      const sat = (x, y, label) =>
+        `<g transform="translate(${x},${y})"><rect x="-32" y="-5" width="20" height="9" rx="2" fill="#2F6DB5" stroke="#9FC4EE"/><rect x="12" y="-5" width="20" height="9" rx="2" fill="#2F6DB5" stroke="#9FC4EE"/><rect x="-10" y="-9" width="20" height="17" rx="3" fill="#D6E0EC"/></g>` +
+        `<text x="${x}" y="${y + 24}" fill="#9FB3C8" font-size="12" text-anchor="middle" font-family="IBM Plex Mono, monospace">${label}</text>`;
+      const hill = '<polygon points="270,240 400,110 530,240" fill="#6f6048" stroke="#3a2e22"/>';
+      function setVp(mode) {
+        let svg = '<rect width="800" height="290" fill="none"/><rect x="0" y="240" width="800" height="50" fill="#44382a"/>';
+        if (mode === "same") {
+          svg += '<polygon points="400,110 790,240 530,240" fill="#7E57C2" fill-opacity=".55"/>' + hill +
+                 '<line x1="130" y1="30" x2="400" y2="110" stroke="#29B6F6" stroke-width="2.5" stroke-dasharray="8 6" class="flow"/><line x1="400" y1="110" x2="790" y2="240" stroke="#29B6F6" stroke-opacity=".5" stroke-width="2" stroke-dasharray="3 6"/>' +
+                 sat(130, 30, "scene 1 + scene 2") +
+                 '<text x="640" y="228" fill="#E6DDF7" font-size="13" text-anchor="middle" font-family="IBM Plex Sans, sans-serif">same hidden slope in both</text>';
+          $("vp-text").textContent = "Both scenes are taken from the same side, so the same slope is hidden in both. The shadow stays put, and only real changes on the ground show up.";
+        } else {
+          svg += '<polygon points="400,110 790,240 530,240" fill="#7E57C2" fill-opacity=".5"/><polygon points="400,110 10,240 270,240" fill="#F59E0B" fill-opacity=".5"/>' + hill +
+                 '<line x1="130" y1="30" x2="400" y2="110" stroke="#29B6F6" stroke-width="2.5" stroke-dasharray="8 6" class="flow"/><line x1="670" y1="30" x2="400" y2="110" stroke="#F5C451" stroke-width="2.5" stroke-dasharray="8 6" class="flow"/>' +
+                 sat(130, 30, "scene 1") + sat(670, 30, "scene 2") +
+                 '<text x="650" y="228" fill="#E6DDF7" font-size="13" text-anchor="middle" font-family="IBM Plex Sans, sans-serif">hidden in scene 1</text>' +
+                 '<text x="150" y="228" fill="#FFE1A8" font-size="13" text-anchor="middle" font-family="IBM Plex Sans, sans-serif">hidden in scene 2</text>';
+          $("vp-text").textContent = "Scene 1 hides the right slope and scene 2 hides the left slope. A computer would see “change” that is only a viewing effect, so a mixed pair like this is rejected.";
+        }
+        vpSvg.innerHTML = svg;
+        document.querySelectorAll("[data-vp]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.vp === mode)));
+      }
+      document.querySelectorAll("[data-vp]").forEach(b => b.addEventListener("click", () => setVp(b.dataset.vp)));
+      setVp("same");
+
+      /* ================= 8. Glossary ================= */
+      const terms = [
+        ["Backscatter", "The part of the radar signal that bounces back to the satellite. More backscatter means a brighter pixel."],
+        ["Decibel (dB)", "A scale for comparing signal strength. Every +3 dB roughly doubles the signal and every −3 dB roughly halves it."],
+        ["Pixel", "One small square of the image. In this study each pixel covers 10 m × 10 m on the ground, which is 100 m²."],
+        ["Polarisation (HH)", "The direction the radar wave is wiggling. HH means it was sent horizontally and received horizontally."],
+        ["GCOV", "A ready-to-use NISAR radar product. It has already been placed on the map and corrected for the shape of the land."],
+        ["Track and frame", "A track is one repeating path of the satellite over the Earth. A frame is one slice of that path. Two scenes with the same track and frame look at the same ground."],
+        ["Ascending / descending", "Whether the satellite is travelling roughly north (ascending) or south (descending) as it looks at the ground. Pairs must match."],
+        ["Speckle", "The grainy, salt-and-pepper noise that every radar image has. It can create lonely pixels that look like change but are not."],
+        ["Minimum group size", "The smallest number of touching flagged pixels we keep. Here it is 4 pixels, which is 400 m²."],
+        ["Permanent water", "Rivers and lakes that were already water before the event. They are excluded so only new water is flagged."],
+        ["Radar shadow", "A patch behind a hill that the radar cannot see, a bit like the shadow of a hill in sunlight."],
+        ["Provisional data", "Data that has been released but is not yet at its final quality, so it may still be improved."],
+        ["Ground truth", "A real-world check, such as a field visit or a clear photo, used to confirm what the satellite suggests. None was used here."]
+      ];
+      const gl = $("gloss-list");
+      function showTerm(i) {
+        $("gloss-term").textContent = terms[i][0];
+        $("gloss-def").textContent = terms[i][1];
+        [...gl.children].forEach((b, k) => b.setAttribute("aria-pressed", String(k === i)));
+      }
+      terms.forEach((t, i) => {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "chip-btn"; b.textContent = t[0];
+        b.addEventListener("click", () => showTerm(i));
+        gl.appendChild(b);
+      });
+      showTerm(0);
+
+      /* ================= In-page nav highlight + reveal ================= */
+      const navLinks = [...document.querySelectorAll(".subnav a")];
+      if ("IntersectionObserver" in window) {
+        const secIO = new IntersectionObserver(entries => entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          navLinks.forEach(l => l.removeAttribute("aria-current"));
+          const link = navLinks.find(l => l.getAttribute("href") === "#" + en.target.id);
+          if (link) {
+            link.setAttribute("aria-current", "true");
+            const bar = link.parentElement;
+            bar.scrollTo({ left: link.offsetLeft - 24, behavior: "smooth" });
+          }
+        }), { rootMargin: "-35% 0px -60% 0px" });
+        navLinks.forEach(l => { const s = document.querySelector(l.getAttribute("href")); if (s) secIO.observe(s); });
+      }
+      const reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const io = new IntersectionObserver(entries => entries.forEach(en => {
+          if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        }), { threshold: 0.1 });
+        reveals.forEach(el => io.observe(el));
+      } else reveals.forEach(el => el.classList.add("in"));
+
+      /* ================= Data (values unchanged) ================= */
+      const updateBadge = (id, passed) => {
+        const badge = $(id);
+        if (!badge) return;
+        badge.textContent = passed ? "PASS" : "FAIL";
+        badge.classList.toggle("pass", passed);
+        badge.classList.toggle("fail", !passed);
+      };
+
+      Promise.all([
+        fetchJson("data/summary.json"),
+        fetchJson("data/quality_report.json"),
+        fetchJson("data/flood_boundary.geojson")
+      ]).then(([summary, quality, geojson]) => {
+        const thresholds = valueAt(quality, "thresholds_db", {});
+        const decrease = valueAt(thresholds, "decrease", -3.0);
+        const maxPostWater = valueAt(thresholds, "max_post_water", -14.0);
+        const highIncrease = valueAt(thresholds, "high_increase_anomaly", 3.5);
+        const mmu = valueAt(quality, "mmu_threshold_pixels", 4);
+        const pixelArea = valueAt(quality, "pixel_area_m2", 100);
+        const speckle = valueAt(quality, "speckle_pixels_filtered", 3323);
+        const area = valueAt(summary, "flooded_area_sqkm", 0.0278);
+        const candidatePixels = valueAt(summary, "candidate_pixels", 278);
+        const uncertainArea = valueAt(summary, "uncertain_area_sqkm", 11.5562);
+        const features = Array.isArray(geojson.features) ? geojson.features : [];
+        const patchCount = features.filter(f => valueAt(f, "properties.type", "") === "candidate_flood").length;
+
+        setText("threshold-decrease", `${Number(decrease) > 0 ? "+" : "−"}${Math.abs(Number(decrease))} dB or lower`);
+        setText("threshold-water", `${Number(maxPostWater) > 0 ? "+" : "−"}${Math.abs(Number(maxPostWater))} dB or lower`);
+        setText("threshold-brighter", `+${Math.abs(Number(highIncrease))} dB or higher`);
+        setText("result-patches", patchCount || undefined);
+        setText("result-pixels", candidatePixels);
+        setText("result-area", Number(area).toFixed(4));
+        setText("record-mmu", mmu);
+        setText("record-area", Number(mmu) * Number(pixelArea));
+        setText("record-speckle", Number(speckle).toLocaleString("en-US"));
+        setText("demo-speckle", Number(speckle).toLocaleString("en-US"));
+        setText("record-pixel-area", pixelArea);
+        setText("record-pixel-size", valueAt(summary, "pixel_size_m", 10));
+        setText("record-polarization", valueAt(summary, "polarization", "HH"));
+        setText("record-version", valueAt(summary, "method_version", "v1.0 (16-stage NISAR GCOV pipeline)"));
+        setText("record-schema", valueAt(quality, "schema_validation", "PASSED"));
+        const rejected = valueAt(quality, "rejected_complex_terms", "HHHV");
+        setText("record-rejected", Array.isArray(rejected) ? rejected.join(", ") : rejected);
+
+        const mlStatus = String(valueAt(quality, "supervised_ml_status", ""));
+        $("ml-row").hidden = !mlStatus.toUpperCase().startsWith("BYPASSED");
+
+        // Pair checks. Direction must MATCH between the scenes (it is not required to be "ascending").
+        const pairValid = valueAt(summary, "pair_valid", false) === true;
+        const orbitPassDirection = String(valueAt(quality, "orbit_pass_direction", "")).toUpperCase();
+        const summaryDirection = String(valueAt(summary, "direction", "")).toUpperCase();
+        const directionValid = orbitPassDirection !== "" && (summaryDirection === "" || summaryDirection === orbitPassDirection);
+        const orbitalValid = String(valueAt(quality, "orbital_check", "")).toUpperCase() === "PASSED";
+        updateBadge("pair-track-status", pairValid);
+        updateBadge("pair-direction-status", directionValid);
+        updateBadge("pair-orbital-status", orbitalValid);
+
+        setText("uncertain-area", Number(uncertainArea).toFixed(2));
+        const track = valueAt(summary, "track", "Track 84, Frame 19");
+        const direction = valueAt(summary, "direction", "Ascending");
+        setText("pair-track-value", track);
+        setText("pair-track-label", track);
+        setText("pair-direction-value", String(direction).toLowerCase());
+        setText("pair-direction-label", direction);
+
+        // Feed the real numbers into the interactive parts
+        if (Number.isFinite(Number(decrease))) T.dec = Number(decrease);
+        if (Number.isFinite(Number(maxPostWater))) T.water = Number(maxPostWater);
+        if (Number.isFinite(Number(highIncrease))) T.bright = Number(highIncrease);
+        if (Number.isFinite(Number(pixelArea))) PIXEL_AREA = Number(pixelArea);
+        if (Number.isFinite(Number(mmu))) {
+          MMU = clamp(Number(mmu), 1, 10);
+          if (!mmuTouched) mmuSlider.value = MMU;
+        }
+        buildAllGauges();
+        evaluate();
+        updateClean();
+      }).catch(() => {
+        // The approved fallback values already in the HTML stay visible.
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "repo_url": "https://github.com/Nasa-Space-DNov-1",
+  "data_sources": [
+    {
+      "name": "NISAR (NASA-ISRO SAR mission)",
+      "url": "https://nisar.jpl.nasa.gov/",
+      "note": "L-band and S-band synthetic aperture radar"
+    },
+    {
+      "name": "ASF Vertex",
+      "url": "https://search.asf.alaska.edu/",
+      "note": "Scene search, granule IDs and acquisition dates"
+    },
+    {
+      "name": "NASA Earthdata",
+      "url": "https://www.earthdata.nasa.gov/",
+      "note": "Earth-observation data archive and documentation"
+    }
+  ],
+  "event_sources": [
+    {
+      "name": "PDMA Khyber Pakhtunkhwa - Daily Situation Report",
+      "url": "https://www.pdma.gov.pk/",
+      "note": "Flood event reference PDMA/PEOC/DSR/2026/Jul-E-22-25. Qualitative corroboration of the event only."
+    }
+  ],
+  "acknowledgement": "Contains modified data from the NASA-ISRO Synthetic Aperture Radar (NISAR) mission, provided by the ASF DAAC. Imagery for this study was searched and obtained from ASF Vertex. Flood event details referenced from the Provincial Disaster Management Authority, Khyber Pakhtunkhwa."
+}

@@ -1,0 +1,47 @@
+{
+  "is_dummy": false,
+  "event_name": "Kandia Gol Flash Flood (22 July 2026)",
+  "location": "Kandia Gol (upper valley), Kandia Tehsil, Upper Kohistan, KP",
+  "event_dates": "22 July 2026 (imaged 2026-07-14 vs 2026-07-26)",
+  "map_center": {
+    "lat": 35.5832,
+    "lon": 72.9081,
+    "zoom": 12
+  },
+  "satellite": "NISAR (L-band)",
+  "polarization": "HH",
+  "track": "Track 84, Frame 19",
+  "direction": "Ascending",
+  "scene_before": {
+    "id": "NISAR_L2_PR_GCOV_025_084_A_019_4005_DHDH_A_20260714T002238_20260714T002313_P05023_F_F_J_001",
+    "date": "2026-07-14"
+  },
+  "scene_after": {
+    "id": "NISAR_L2_PR_GCOV_026_084_A_019_4005_DHDH_A_20260726T002237_20260726T002312_P05023_N_F_J_001",
+    "date": "2026-07-26"
+  },
+  "flooded_area_sqkm": 0.0278,
+  "permanent_water_sqkm": 0.0838,
+  "confidence": "Low",
+  "pair_valid": true,
+  "threshold_db": -14.0,
+  "method_version": "v1.0 (16-stage NISAR GCOV pipeline)",
+  "conclusion": "Same-track Ascending L-band SAR comparison (Track 84, Frame 19) between 2026-07-14 and 2026-07-26 found 0.0278 km\u00b2 (278 pixels) of candidate flood inundation. This is an unvalidated estimate.",
+  "limitations": [
+    "Observation Gap & 4-Day Post-Flood Lag: No satellite acquisition of any kind occurred over this AOI between 19 Jul 2026 (14:03 UTC) and 24 Jul 2026 (13:54 UTC). The 22 July 2026 flash flood peak was never directly imaged, and the 26 July 2026 (00:22 UTC) NISAR pass captures residual post-recession conditions ~4 days after the cloudburst.",
+    "Alpine Flash-Flood Physics (Debris Scour vs. Standing Water): High-velocity mountain flash floods in Zehar Dara and Kandia Gol primarily scour channels and deposit coarse boulders, sediment, and debris (washing away 7\u20138 houses, livestock, and agricultural terraces per PDMA KP DSR #9050), which increase radar surface roughness (+dB, flagged as 'uncertain/debris' pixels) rather than leaving broad, calm specular water pools (-dB).",
+    "Steep Gorge Topography (Radar Shadow & Layover): Although both passes share identical viewing geometry (Track 84, Frame 19, Ascending) and apply GCOV RTC validity masks, steep valley walls in Upper Kohistan mask ~14% of the 5 km AOI and can obscure narrow thalweg reaches or cause residual shadow darkening.",
+    "Narrow Tributary Width vs. 10 m Grid & 400 m\u00b2 MMU: At 10 m pixel spacing with a 4-pixel Minimum Mapping Unit (400 m\u00b2), headwater torrents narrower than ~20 m (such as upper Zehar Dara ahead of Maidan Gabral) mix with adjacent rocky banks in a single pixel and can be suppressed by speckle filtering.",
+    "Provisional Product Maturity & No Ground-Truth Polygon: Both NISAR L2 GCOV granules (CRID P05023) carry provisional calibration maturity and are classified via unsupervised physical thresholding without an independent optical or field-surveyed flood perimeter."
+  ],
+  "validation": {
+    "type": "unsupervised physical thresholding + MMU filtering",
+    "note": "No independent ground truth. Event occurrence is corroborated only qualitatively by the PDMA KP situation report."
+  },
+  "candidate_pixels": 278,
+  "uncertain_pixels": 115562,
+  "pixel_size_m": 10.0,
+  "uncertain_area_sqkm": 11.5562,
+  "rule_text": "A pixel is a candidate flooded pixel when backscatter drops by 3 dB or more and the post-event value is at or below -14 dB; a rise of 3.5 dB or more is held as uncertain surface change. (Wording to be confirmed by the data team.)",
+  "headline": "Four days after the peak, L-band radar saw little standing water. Most of the signal is surface change."
+}

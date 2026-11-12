@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | Atlas After Blue</title>
+  <meta name="description" content="Learn about Atlas After Blue, its intended users, team, use of AI tools and independent status.">
+  <meta name="theme-color" content="#0B1F3A">
+  <link rel="icon" href="img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/method.css">
+  <link rel="stylesheet" href="css/about.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Atlas After Blue home">
+        <img src="img/logo.png" alt="">
+        <span>Atlas <b>After Blue</b></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="menu-lines" aria-hidden="true"></span><span class="sr-only">Toggle navigation</span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="report.html">Report</a>
+        <a href="method.html">Method</a>
+        <a href="sources.html">Sources</a>
+        <a href="about.html" aria-current="page">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="m-hero">
+    <div class="mwrap rwrap">
+      <div class="eyebrow"><span class="eyebrow-mark"></span> ABOUT</div>
+      <h1>About Atlas After Blue</h1>
+      <ul class="hero-chips" aria-label="Project facts">
+        <li>Independent student project</li>
+        <li>NISAR radar data</li>
+        <li>NASA Space Apps 2026</li>
+      </ul>
+    </div>
+  </section>
+
+  <nav class="subnav" aria-label="On this page">
+    <div class="mwrap">
+      <a href="#the-name" aria-current="true">The name</a>
+      <a href="#audience">Who it's for</a>
+      <a href="#team">Team</a>
+      <a href="#ai-declaration">AI declaration</a>
+      <a href="#independence">Independence</a>
+    </div>
+  </nav>
+
+  <main id="content">
+
+    <!-- 1. THE NAME -->
+    <section class="msec" id="the-name" aria-labelledby="name-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="name-title">The name</h2>
+        </div>
+        <p class="name-copy reveal">Blue is water. Atlas After Blue maps what remains after the water has passed: a flood's aftermath, seen from space. Shortened, the name becomes AAB, and <em>Aab</em> is the Urdu word for water. The full name describes what the site does. The short form carries where it comes from.</p>
+        <div class="name-lab reveal">
+          <div class="name-card">
+            <p class="cap">Select a letter to read the name.</p>
+            <div class="letter-row" role="group" aria-label="Letters of AAB">
+              <button class="letter" type="button" aria-pressed="false" data-say="Atlas: the map. The site maps what remains."><b>A</b><span>Atlas</span></button>
+              <button class="letter" type="button" aria-pressed="false" data-say="After: the time once the water has passed."><b>A</b><span>After</span></button>
+              <button class="letter" type="button" aria-pressed="false" data-say="Blue: water."><b>B</b><span>Blue</span></button>
+            </div>
+            <p class="letter-out" id="letter-out" aria-live="polite">Together: a map of a flood's aftermath, seen from space.</p>
+          </div>
+          <div class="urdu-card" id="urdu-card">
+            <div class="ripples" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div>
+              <span class="urdu-name" lang="ur" dir="rtl" aria-label="Aab">آب</span>
+              <p class="urdu-sub">AAB · the Urdu word for water</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. AUDIENCE -->
+    <section class="msec alt" id="audience" aria-labelledby="aud-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="aud-title">Who this is for</h2>
+        </div>
+        <ul class="aud-chips reveal" aria-label="Intended users">
+          <li>PDMA KP</li>
+          <li>Provincial Emergency Operation Centre</li>
+        </ul>
+        <p class="about-copy reveal">AAB is for provincial disaster teams such as PDMA KP and the Provincial Emergency Operation Centre, who review satellite-derived observations next to situation reports and damage records.</p>
+        <h3 class="why-title reveal">Why it fits</h3>
+        <div class="why-grid">
+          <article class="why-card reveal">
+            <div class="why-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg></div>
+            <h3>Free, open data.</h3>
+            <p>NISAR is a NASA–ISRO mission whose data is public, so no commercial imagery budget is needed.</p>
+          </article>
+          <article class="why-card reveal" style="--d:70ms">
+            <div class="why-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.5-7.97A5.5 5.5 0 0 1 17 8.5a4.5 4.5 0 0 1 0 9.5H7z"/></svg></div>
+            <h3>Sees through cloud.</h3>
+            <p>Radar works through monsoon cloud and at night, when optical imagery often cannot.</p>
+          </article>
+          <article class="why-card reveal" style="--d:140ms">
+            <div class="why-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h16"/><circle cx="18" cy="12" r="2"/></svg></div>
+            <h3>A rule you can explain.</h3>
+            <p>The method is a transparent threshold, not a black box, so a team can defend it in a briefing.</p>
+          </article>
+          <article class="why-card caution reveal" style="--d:210ms">
+            <div class="why-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.5v.01"/></svg></div>
+            <h3>Honest about uncertainty.</h3>
+            <p>Every result is labelled candidate, Low confidence, with what it cannot prove.</p>
+          </article>
+        </div>
+        <p class="why-closing reveal">AAB shows how NASA's open radar data can support a small team in Pakistan. It is supplementary evidence and does not replace field assessment.</p>
+      </div>
+    </section>
+
+    <!-- 3. TEAM -->
+    <section class="msec" id="team" aria-labelledby="team-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="team-title">Team</h2>
+          <p class="sub">Who did what on Atlas After Blue.</p>
+        </div>
+        <div id="team-board" class="team-board" aria-live="polite">
+          <p class="team-load-note">Loading team…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. AI DECLARATION -->
+    <section class="msec alt" id="ai-declaration" aria-labelledby="ai-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="ai-title">AI declaration</h2>
+        </div>
+        <div class="seg reveal" role="group" aria-label="Show">
+          <button type="button" id="seg-ai" aria-pressed="true">AI helped with</button>
+          <button type="button" id="seg-team" aria-pressed="false">The team did</button>
+        </div>
+        <div id="panel-ai" class="ai-grid reveal">
+          <article class="ai-tool">
+            <span class="tag">Data analysis</span>
+            <h3>Gemini</h3>
+            <p>Helped write and review repetitive data-analysis code.</p>
+          </article>
+          <article class="ai-tool">
+            <span class="tag">Front end</span>
+            <h3>Claude (Anthropic)</h3>
+            <p>Helped with the site's front-end code.</p>
+          </article>
+          <article class="ai-tool">
+            <span class="tag">Logo</span>
+            <h3>ChatGPT</h3>
+            <p>Helped generate the logo from the team's concept, and the team chose from several versions.</p>
+          </article>
+        </div>
+        <div id="panel-team" class="team-did" hidden>
+          <ul>
+            <li>Set the colour palette.</li>
+            <li>Assigned roles and coordinated the work.</li>
+            <li>Built the radar analysis.</li>
+            <li>Chose the thresholds.</li>
+            <li>Produced every number shown, with the team's own pipeline.</li>
+          </ul>
+        </div>
+        <article class="mcard ai-full reveal">
+          <p>The team used AI tools in three places. Gemini helped write and review repetitive data-analysis code. Claude (Anthropic) helped with the site's front-end code. ChatGPT helped generate the logo from the team's concept, and the team chose from several versions. The team set the colour palette, assigned roles and coordinated the work. The radar analysis, the thresholds and every number shown come from the team's own pipeline.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 5. INDEPENDENCE -->
+    <section class="msec" id="independence" aria-labelledby="indep-title">
+      <div class="mwrap">
+        <div class="mhead reveal">
+          <h2 id="indep-title">Independent project</h2>
+        </div>
+        <article class="short reveal">
+          <p>AAB is an independent student project for the NASA Space Apps Challenge 2026. It uses NISAR data but carries no NASA logo and has no NASA endorsement.</p>
+          <div class="indep-tags" aria-hidden="true">
+            <span>Independent</span><span>No NASA logo</span><span>No NASA endorsement</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main">
+      <a class="footer-brand" href="index.html"><img src="img/logo.png" alt=""><span>Atlas After Blue</span></a>
+      <p id="ack">AAB · NASA Space Apps Challenge 2026.</p>
+      <p class="footer-disclaimer">Candidate results, not confirmed floodwater.</p>
+    </div>
+    <div class="footer-bottom"><span>EARTH OBSERVATION / KANDIA GOL / 2026</span><a href="#content">Back to top ↑</a></div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    (() => {
+      "use strict";
+      const $ = (s, r = document) => r.querySelector(s);
+      const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* ---------- Reveal on scroll (same behaviour as the Method page) ---------- */
+      const io = "IntersectionObserver" in window && !reduce
+        ? new IntersectionObserver(entries => entries.forEach(en => {
+            if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+          }), { threshold: 0.12, rootMargin: "0px 0px -6% 0px" })
+        : null;
+      const reveal = el => (io ? io.observe(el) : el.classList.add("in"));
+      $$(".reveal").forEach(reveal);
+
+      /* ---------- Sub-nav highlight (same aria-current="true" pattern as Method) ---------- */
+      const navLinks = $$(".subnav a");
+      const sections = navLinks.map(a => $(a.getAttribute("href"))).filter(Boolean);
+      const spy = () => {
+        const y = window.scrollY + 190;
+        let current = sections[0];
+        sections.forEach(s => { if (s.offsetTop <= y) current = s; });
+        navLinks.forEach(a => {
+          if (a.getAttribute("href") === "#" + current.id) a.setAttribute("aria-current", "true");
+          else a.removeAttribute("aria-current");
+        });
+      };
+      window.addEventListener("scroll", spy, { passive: true });
+      spy();
+
+      /* ---------- Name decoder ---------- */
+      const out = $("#letter-out");
+      const defaultSay = out.textContent;
+      const letters = $$(".letter");
+      const urdu = $("#urdu-card");
+      letters.forEach(btn => btn.addEventListener("click", () => {
+        const on = btn.getAttribute("aria-pressed") === "true";
+        letters.forEach(b => b.setAttribute("aria-pressed", "false"));
+        if (!on) btn.setAttribute("aria-pressed", "true");
+        out.textContent = on ? defaultSay : btn.dataset.say;
+        urdu.classList.remove("pulse");
+        void urdu.offsetWidth;
+        if (!on && btn.querySelector("span").textContent === "Blue") urdu.classList.add("pulse");
+      }));
+
+      /* ---------- AI declaration toggle ---------- */
+      const segAi = $("#seg-ai"), segTeam = $("#seg-team");
+      const panelAi = $("#panel-ai"), panelTeam = $("#panel-team");
+      const showPanel = ai => {
+        segAi.setAttribute("aria-pressed", String(ai));
+        segTeam.setAttribute("aria-pressed", String(!ai));
+        panelAi.hidden = !ai;
+        panelTeam.hidden = ai;
+      };
+      segAi.addEventListener("click", () => showPanel(true));
+      segTeam.addEventListener("click", () => showPanel(false));
+
+      /* ---------- Team ---------- */
+      const board = $("#team-board");
+      const make = (tag, className, text) => {
+        const el = document.createElement(tag);
+        if (className) el.className = className;
+        if (text !== undefined) el.textContent = text;
+        return el;
+      };
+      const initialsFor = name => String(name || "").trim().split(/\s+/).filter(Boolean).slice(0, 2)
+        .map(p => Array.from(p)[0].toUpperCase()).join("");
+
+      const LINKEDIN_PATH = "M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z";
+
+      function linkedinButton(member) {
+        if (!member.linkedin) return null;
+        const a = make("a", "tm-li");
+        a.href = member.linkedin;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.setAttribute("aria-label", `LinkedIn profile of ${member.name} (opens in a new tab)`);
+        const ns = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(ns, "svg");
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("width", "18");
+        svg.setAttribute("height", "18");
+        svg.setAttribute("aria-hidden", "true");
+        svg.setAttribute("focusable", "false");
+        const path = document.createElementNS(ns, "path");
+        path.setAttribute("d", LINKEDIN_PATH);
+        path.setAttribute("fill", "currentColor");
+        svg.appendChild(path);
+        a.append(svg, make("span", "", "LinkedIn"));
+        return a;
+      }
+
+      function photoFrame(member) {
+        const frame = make("div", "tm-frame");
+        const photo = make("div", "tm-photo", initialsFor(member.name));
+        if (member.focus) photo.style.setProperty("--focus", member.focus);
+        if (member.zoom) photo.style.setProperty("--zoom", member.zoom);
+        if (member.photo) {
+          const img = document.createElement("img");
+          img.src = member.photo;
+          img.alt = `Portrait of ${member.name}`;
+          img.loading = "lazy";
+          img.decoding = "async";
+          img.onerror = () => img.remove();
+          img.onload = () => photo.classList.add("loaded");
+          photo.appendChild(img);
+        }
+        frame.appendChild(photo);
+        return frame;
+      }
+
+      function nameBlock(member) {
+        const box = make("div", "tm-id");
+        box.append(make("h3", "tm-name", member.name), make("p", "tm-title", member.role));
+        return box;
+      }
+
+      function leadCard(member) {
+        const card = make("article", "tm-lead reveal");
+        const body = make("div", "tm-body");
+        const li = linkedinButton(member);
+        body.append(nameBlock(member), make("p", "tm-desc", member.description));
+        if (li) body.append(li);
+        card.append(photoFrame(member), body);
+        reveal(card);
+        return card;
+      }
+
+      function memberCard(member, delay) {
+        const card = make("article", "tm-card reveal");
+        card.style.setProperty("--d", delay + "ms");
+        const head = make("div", "tm-head");
+        head.append(photoFrame(member), nameBlock(member));
+        card.append(head, make("p", "tm-desc", member.description));
+        const li = linkedinButton(member);
+        if (li) card.append(li);
+        reveal(card);
+        return card;
+      }
+
+      function renderTeam(members) {
+        if (!Array.isArray(members) || members.length === 0) throw new Error("Team data is empty.");
+        const leadIndex = Math.max(0, members.findIndex(m => m.lead === true));
+        const others = members.filter((m, i) => i !== leadIndex);
+
+        const grid = make("ul", "team-grid");
+        grid.setAttribute("aria-label", "Team members");
+        others.forEach((m, i) => {
+          const li = document.createElement("li");
+          li.appendChild(memberCard(m, i * 70));
+          grid.appendChild(li);
+        });
+        const join = make("div", "team-join");
+        join.setAttribute("aria-hidden", "true");
+        board.replaceChildren(leadCard(members[leadIndex]), join, grid);
+      }
+
+      fetch("data/team.json")
+        .then(r => { if (!r.ok) throw new Error("Team data request failed."); return r.json(); })
+        .then(renderTeam)
+        .catch(() => board.replaceChildren(make("p", "team-load-error", "The team list could not be loaded.")));
+    })();
+  </script>
+</body>
+</html>

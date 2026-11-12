@@ -1,0 +1,10 @@
+{
+  "status": "SUCCESS",
+  "place_name": "Kandia Gol (upper valley), Kandia Tehsil, Upper Kohistan, KP",
+  "utm_epsg": 32643,
+  "orbital_compatibility": "PASSED",
+  "total_flood_pixels": 278,
+  "total_debris_pixels": 115562,
+  "total_candidate_area_m2": 27800.0,
+  "total_candidate_area_km2": 0.0278
+}
