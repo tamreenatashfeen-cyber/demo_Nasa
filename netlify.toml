@@ -1,0 +1,3 @@
+[build]
+  # The website files live in the "aab" folder, not the repository root.
+  publish = "aab"
